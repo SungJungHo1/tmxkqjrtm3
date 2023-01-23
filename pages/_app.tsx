@@ -46,11 +46,10 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
   const [liffObject, setLiffObject] = useState<Liff | null>(null);
   const [liffError, setLiffError] = useState<string | null>(null);
 
-  
   // Execute liff.init() when the app is initialized
   useEffect(() => {
     // alert("app");
-    let liff_ID = "1657404178-8A1Mjqjv"
+    let liff_ID = "1657404178-vbEl737y"
     // to avoid `window is not defined` error
     async function liffLogin() {
       const liff = (await import('@line/liff')).default;
