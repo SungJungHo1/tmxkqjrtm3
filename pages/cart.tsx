@@ -174,6 +174,7 @@ const Cart: NextPage = () => {
               <div className="relative h-56 w-full overflow-hidden rounded-md">
                 <Image
                   src={menu.original_image}
+                  unoptimized
                   alt={menu.menu_name}
                   layout="fill"
                   objectFit="cover"

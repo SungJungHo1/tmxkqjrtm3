@@ -5,13 +5,6 @@ const nextConfig = {
     dirs: ['pages', 'templates', 'components', 'store', 'libs', 'hooks', 'app', '__tests__'], // Only run ESLint on the 'pages' and 'utils' directories during production builds (next build)
   },
   images: {
-    // domains: [
-    //   'yogiyo.co.kr',
-    //   'static.yogiyo.co.kr',
-    //   'rev-static.yogiyo.co.kr',
-    //   'images.yogiyo.co.kr',
-    //   'i.ibb.co',
-    // ],
     unoptimized: true,
   },
   experimental: {

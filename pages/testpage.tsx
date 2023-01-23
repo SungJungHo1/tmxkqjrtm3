@@ -120,7 +120,7 @@ const Testpage: NextPage<{
         
         <div className="grid grid-cols-10 grid-rows-6 gap-2 h-48 bg-white text-[#000000]" style={{ fontFamily: "Sriracha-Regular" }}>
           <div className="row-start-2 h-24 w-24 flex-[0_0_6rem] overflow-hidden rounded-md bg-slate-300">
-            <Image src={'/images/categories/Fastfood.png'} width={105} height={100} alt="logo" />
+            <Image src={'/images/categories/Fastfood.png'} width={105} height={100} alt="logo" unoptimized/>
           </div>
           {/* 은행명 */}
           <div className="row-start-2 col-start-4 col-end-6" style={{fontSize:"13px" }}>ธนาคาร</div>
@@ -154,7 +154,7 @@ const Testpage: NextPage<{
                 <div className="row-start-2 row-end-6 pl-6">
                   {datas.thumbnail_url ? 
                   <div className="relative h-20 w-24 flex-[0_0_6rem] overflow-hidden rounded-md bg-slate-300">
-                    <Image src={datas.thumbnail_url} width={120} height={100} alt="logo" />
+                    <Image src={datas.thumbnail_url} width={120} height={100} alt="logo" unoptimized/>
                   </div> :
                   <div className="relative h-20 w-24 flex-[0_0_6rem] overflow-hidden rounded-md bg-slate-300"></div>}
                   

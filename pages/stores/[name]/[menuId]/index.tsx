@@ -366,6 +366,7 @@ const MenuDetails: NextPage = () => {
               <Image
                 src={original_image as string}
                 alt={menu_name as string}
+                unoptimized
                 layout="fill"
                 objectFit="cover"
               />

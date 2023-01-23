@@ -134,6 +134,7 @@ const Review: NextPage = () => {
                   src={review.review_images[0].full}
                   alt="review image"
                   layout="fill"
+                  unoptimized
                   objectFit="cover"
                 />
               </div>
@@ -168,6 +169,7 @@ const Review: NextPage = () => {
                             alt="review image"
                             layout="fill"
                             objectFit="cover"
+                            unoptimized
                           />
                         </div>
                         <div className="flex w-full flex-col overflow-hidden">

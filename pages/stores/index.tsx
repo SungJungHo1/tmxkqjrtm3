@@ -148,7 +148,7 @@ const Stores: NextPage<{
                         : 'วันนี้ปิดทำการแล้วค่ะ'}
                     </div>
                   ) : null}
-                  <Image src={restaurant.logo_url} width={100} height={100} alt="logo" />
+                  <Image src={restaurant.logo_url} width={100} height={100} alt="logo" unoptimized/>
                 </div>
                 <div className="ml-4 space-y-1 text-left">
                   <div className="text-lg font-bold">{restaurant.name}</div>

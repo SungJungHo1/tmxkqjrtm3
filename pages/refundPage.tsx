@@ -146,7 +146,7 @@ const Order: NextPage = () => {
       <div className="flex h-screen flex-col">
         {!OnHidden ? <div className="absolute z-10 flex h-full w-full flex-col justify-center bg-black/70 px-2 text-center text-xs text-white">
           <p style={{ fontSize: '30px', lineHeight: '150%', fontFamily: "Sriracha-Regular" }}>{'กำลังยืนยันคำสั่งซื้อ โปรดรอสักครู่เนื่องจากคำสั่งซื้อจะถูกย้ายไปที่หน้าต่างบรรทัดหลังจากการยืนยัน'}</p>
-          <Image src="/images/Inter.svg" alt="home" width={300} height={300} />
+          <Image src="/images/Inter.svg" alt="home" width={300} height={300} unoptimized/>
         </div> : null}
         <div className="flex-1 space-y-5 overflow-auto p-5">
           {/* <div id="map" ref={mapElement} style={{ width: '100 %', height: '200px' }} hidden={!OnHidden}></div>

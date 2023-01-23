@@ -88,7 +88,7 @@ const Cart: NextPage<{
             <div>{`หมายเลขโทรศัพท์ : ${Order.Order_Data.phone}`}</div>
             <br></br>
             {Order.Addres_Url ? 
-              <Image src={Order.Addres_Url} width={500} height={600} alt="address" />:null
+              <Image src={Order.Addres_Url} width={500} height={600} alt="address" unoptimized/>:null
             }
           </div>
         </div>

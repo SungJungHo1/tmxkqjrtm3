@@ -165,7 +165,7 @@ const Menus: NextPage = () => {
           <>
             <div className="relative h-56 w-full bg-slate-300" style={{ fontFamily: "Sriracha-Regular" }}>
               {typeof thumbnail_url === 'string' && (
-                <Image src={thumbnail_url} alt={name as string} layout="fill" objectFit="cover" />
+                <Image src={thumbnail_url} alt={name as string} layout="fill" objectFit="cover" unoptimized/>
               )}
             </div>
 
@@ -243,7 +243,7 @@ const Menus: NextPage = () => {
                 <div className="w-36 overflow-hidden rounded-md border border-gray-200" style={{ fontFamily: "Sriracha-Regular" }}>
                   <div className="relative h-24 w-full">
                     {menu.image ? (
-                      <Image src={menu.image} alt={menu.name} layout="fill" objectFit="cover" />
+                      <Image src={menu.image} alt={menu.name} layout="fill" objectFit="cover" unoptimized/>
                     ) : null}
                   </div>
                   <div className="w-full bg-black/60 p-2 text-white">
@@ -275,7 +275,7 @@ const Menus: NextPage = () => {
                   <div className="w-36 overflow-hidden rounded-md border border-gray-200" style={{ fontFamily: "Sriracha-Regular" }}>
                     <div className="relative h-24 w-full">
                       {menu.image ? (
-                        <Image src={menu.image} alt={menu.name} layout="fill" objectFit="cover" />
+                        <Image src={menu.image} alt={menu.name} layout="fill" objectFit="cover" unoptimized />
                       ) : null}
                     </div>
                     <div className="w-full bg-black/60 p-2 text-white">
@@ -307,7 +307,7 @@ const Menus: NextPage = () => {
                     </div>
                     <div className="relative h-24 w-32 flex-[0_0_8rem] overflow-hidden rounded-md">
                       {menu.image ? (
-                        <Image src={menu.image} alt={menu.name} layout="fill" objectFit="cover" />
+                        <Image src={menu.image} alt={menu.name} layout="fill" objectFit="cover" unoptimized/>
                       ) : null}
                     </div>
                   </a>
@@ -346,7 +346,7 @@ const Menus: NextPage = () => {
                     </div>
                     <div className="relative h-24 w-32 flex-[0_0_8rem] overflow-hidden rounded-md">
                       {menu.image ? (
-                        <Image src={menu.image} alt={menu.name} layout="fill" objectFit="cover" />
+                        <Image src={menu.image} alt={menu.name} layout="fill" objectFit="cover" unoptimized/>
                       ) : null}
                     </div>
                   </a>
@@ -378,7 +378,7 @@ const Menus: NextPage = () => {
                         </div>
                         <div className="relative h-24 w-32 flex-[0_0_8rem] overflow-hidden rounded-md">
                           {menu.image ? (
-                            <Image src={menu.image} alt={menu.name} layout="fill" objectFit="cover" />
+                            <Image src={menu.image} alt={menu.name} layout="fill" objectFit="cover" unoptimized/>
                           ) : null}
                         </div>
                       </a>
@@ -416,7 +416,7 @@ const Menus: NextPage = () => {
                         </div>
                         <div className="relative h-24 w-32 flex-[0_0_8rem] overflow-hidden rounded-md">
                           {menu.image ? (
-                            <Image src={menu.image} alt={menu.name} layout="fill" objectFit="cover" />
+                            <Image src={menu.image} alt={menu.name} layout="fill" objectFit="cover" unoptimized />
                           ) : null}
                         </div>
                       </a>

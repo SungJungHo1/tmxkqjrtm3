@@ -293,6 +293,7 @@ const Home: NextPage<{
                     alt={category.label}
                     layout="fill"
                     objectFit="contain"
+                    unoptimized
                   />
                 </div>
                 <div className="text-center text-sm">{category.label}</div>
@@ -351,6 +352,7 @@ const Home: NextPage<{
                         src={restaurant.thumbnail_url}
                         layout="fill"
                         objectFit="cover"
+                        unoptimized
                         alt="thumbnail"
                       />
                     </div>
@@ -386,6 +388,7 @@ const Home: NextPage<{
                         ) : null}
                         <Image
                           src={restaurant.thumbnail_url}
+                          unoptimized
                           layout="fill"
                           objectFit="cover"
                           alt="thumbnail"

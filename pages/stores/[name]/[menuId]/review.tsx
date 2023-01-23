@@ -40,6 +40,7 @@ const Review: NextPage = ({ data }: { data: any }) => {
                   src={review.review_images[0].full}
                   alt="review image"
                   layout="fill"
+                  unoptimized
                   objectFit="cover"
                 />
               </div>
