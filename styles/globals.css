@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+::-webkit-scrollbar {
+  display: none;
+  /* for Chrome, Safari, and Opera */
+}
+
+@font-face {
+  font-family: 'Sriracha-Regular';
+  src: url('../public/static/fonts/Mali-SemiBold.ttf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+::placeholder {
+  font-family: 'Sriracha-Regular';
+}

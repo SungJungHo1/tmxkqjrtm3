@@ -1,0 +1,10 @@
+@font-face {
+    font-family: 'Sriracha-Regular';
+    src: url('Mali-SemiBold.ttf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+::placeholder {
+    font-family: 'Sriracha-Regular';
+}
