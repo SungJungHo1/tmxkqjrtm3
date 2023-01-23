@@ -46,6 +46,7 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
   const [liffObject, setLiffObject] = useState<Liff | null>(null);
   const [liffError, setLiffError] = useState<string | null>(null);
 
+  
   // Execute liff.init() when the app is initialized
   useEffect(() => {
     // alert("app");
