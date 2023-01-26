@@ -27,7 +27,7 @@ const Cart: NextPage = () => {
   const [MyPoint, setMyPoint] = useState(0);
   const [UsePoint, setUsePoint] = useState(0);
   const [Coupon_List, setCoupon_List] = useState([]);
-  const [Coupon_Code, setCoupon_Code] = useState("");
+  const [Coupon_Code, setCoupon_Code] = useState("not");
   const [Coupon_Pay, setCoupon_Pay] = useState(0);
   const [UserId, setUserId] = useState("");
 
