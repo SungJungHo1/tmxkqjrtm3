@@ -25,23 +25,23 @@ const Order: NextPage = () => {
 
   const [liffObject, setLiffObject] = useState<Liff | null>(null);
 
-  useEffect(() => {
-    let liff_ID = "1657404178-OkbrA8Ae"
-    // to avoid `window is not defined` error
-    async function liffLogin() {
-      const liff = (await import('@line/liff')).default;
-      try {
-        await liff.init({ liffId: liff_ID }).then(() => {
-          // console.log("LIFF init succeeded.");
-          setLiffObject(liff);
-        })
-      } catch (err) {
-        console.error('liff init error', err.message);
-      }
-    }
-    liffLogin();
+  // useEffect(() => {
+  //   let liff_ID = "1657404178-OkbrA8Ae"
+  //   // to avoid `window is not defined` error
+  //   async function liffLogin() {
+  //     const liff = (await import('@line/liff')).default;
+  //     try {
+  //       await liff.init({ liffId: liff_ID }).then(() => {
+  //         // console.log("LIFF init succeeded.");
+  //         setLiffObject(liff);
+  //       })
+  //     } catch (err) {
+  //       console.error('liff init error', err.message);
+  //     }
+  //   }
+  //   liffLogin();
 
-  }, []);
+  // }, []);
 
   useEffect(() => {
     if (liffObject !== null) {
@@ -103,14 +103,15 @@ const Order: NextPage = () => {
       new_Cus = true
     }
     
-    await axios //"U812329a68632f4237dea561c6ba1d413"
+    await axios //"Ua80cd1a19a12cb88657950e300a68594"
       .post(`https://www.fastfood.p-e.kr/refund`, {
       // .post(`http://localhost/refund`, {
         'UserName':userId,
         'UserId':userName,
         'Name':data.Name,
         'BankName':bankName,
-        'accountName':data.accountName
+        'accountName':data.accountName,
+        "Refund_Point":User_Point
       })
       .then((res) => {
         
@@ -119,9 +120,7 @@ const Order: NextPage = () => {
           confirmButtonText: 'Ok',
         }).then((result) => {
           /* Read more about isConfirmed, isDenied below */
-          if (result.isConfirmed) {
             liffObject.closeWindow()
-          }
         })
       })
       

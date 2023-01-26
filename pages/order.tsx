@@ -114,6 +114,7 @@ const Order: NextPage<{
 
   // if ()alert('form: ' + JSON.stringify(data) + '//// cart: ' + JSON.stringify(cartOrder))
   const onSubmit = async (data) => {
+    console.log(router.query.Use_Point)
     // 둘 다 입력이 안되어있을 때 에러
     if (SummitClicked) {
       return
@@ -143,6 +144,8 @@ const Order: NextPage<{
 
     const formData = new FormData(formRef.current)
     // console.log(formData)
+    console.log(router.query.Use_Point)
+    
     if (data.addressPhoto.length) {
       formData.append('file', data.addressPhoto[0])
     }
@@ -182,17 +185,19 @@ const Order: NextPage<{
     const File_Dates = await handleFileOnChange(data.addressPhoto[0])
     await axios //"U812329a68632f4237dea561c6ba1d413"
       .postForm(`https://www.fastfood.p-e.kr/pushOrder?userId=${userId}&userName=${encodeURIComponent(userName)}&new_cus=${new_Cus}&delivery_fee=${router.query.fee}&Service_Money=${serveis_money}&ImageIn=${data.addressPhoto[0] !== undefined ? 'yes' : 'no'}`, {
+        // .postForm(`https://www.fastfood.p-e.kr/pushOrder?userId=${'U812329a68632f4237dea561c6ba1d413'}&userName=${'크턱'}&new_cus=${new_Cus}&delivery_fee=${router.query.fee}&Service_Money=${serveis_money}&ImageIn=${data.addressPhoto[0] !== undefined ? 'yes' : 'no'}`, {
       // .postForm(`https://www.fastfood.p-e.kr/pushOrder?userId=${'U812329a68632f4237dea561c6ba1d413'}&userName=${"크턱"}&new_cus=${new_Cus}&delivery_fee=${router.query.fee}&Service_Money=${serveis_money}&ImageIn=${data.addressPhoto[0] !== undefined ? 'yes' : 'no'}`, {
-        // .postForm(`http://localhost/pushOrder?userId=${'U812329a68632f4237dea561c6ba1d413'}&userName=${"크턱"}&new_cus=${new_Cus}&delivery_fee=${router.query.fee}&Service_Money=${serveis_money}&ImageIn=${data.addressPhoto[0] !== undefined ? 'yes' : 'no'}`, {
+        // .postForm(`http://localhost/pushOrder?userId=${'Ua80cd1a19a12cb88657950e300a68594'}&userName=${"개발자"}&new_cus=${new_Cus}&delivery_fee=${router.query.fee}&Service_Money=${serveis_money}&ImageIn=${data.addressPhoto[0] !== undefined ? 'yes' : 'no'}`, {
         OrderData: JSON.stringify(data),
         cart: JSON.stringify(cartOrder),
         lan: position.latitude,
         lng: position.longitude,
         thumbnail_url: sessionStorage.getItem("thumbnail_url"),
-        // image: data.addressPhoto[0] ? data.addressPhoto[0] : null
         image: data.addressPhoto[0] ? File_Dates : null,
         phone:sessionStorage.getItem("phone"),
-        use_point:sessionStorage.getItem("Use_Point")
+        use_point:Number(router.query.Use_Point),
+        Coupon_Pay:Number(router.query.Coupon_Pay),
+        Coupon_Code:String(router.query.Coupon_Code)
       })
       .then((res) => {
         Messege = res.data.datas
@@ -259,7 +264,8 @@ const Order: NextPage<{
           {/* <div id="map" ref={mapElement} style={{ width: '100 %', height: '200px' }} hidden={!OnHidden}></div>
            */}
           
-          <div style={{ fontSize: '18px', lineHeight: '150%', fontFamily: "Sriracha-Regular", color: "slateblue" }}>เมื่อสั่งอาหารแล้วที่อยู่จะถูกลงทะเบียนโดยอัตโนมัติในแอปค่ะ สั่งครั้งหน้าไม่ต้องส่งไปให้แอดมินค่ะ ลูกค้าสามารถสั่งอาหารได้โดยคลิกครั้งเดียวค่ะ</div>
+          {/* <div style={{ fontSize: '18px', lineHeight: '150%', fontFamily: "Sriracha-Regular", color: "slateblue" }}>เมื่อสั่งอาหารแล้วที่อยู่จะถูกลงทะเบียนโดยอัตโนมัติในแอปค่ะ สั่งครั้งหน้าไม่ต้องส่งไปให้แอดมินค่ะ ลูกค้าสามารถสั่งอาหารได้โดยคลิกครั้งเดียวค่ะ</div> */}
+          
           <div className="text-lg font-bold" style={{ fontFamily: "Sriracha-Regular" }}>
             {/*배송정보*/}
             ข้อมูลการจัดส่ง
