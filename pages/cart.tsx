@@ -344,35 +344,8 @@ const Cart: NextPage = () => {
           </div>
         ))}
         <div>
-          <div className="my-4 space-y-5 ">
-            <div className="flex flex-row justify-between">
-              <span className="text-[#7c7c7c]">
-                {/* 총 */}
-                {`ยอดรวม`}
-              </span>
-              <span>{`₩ ${insertCommas(menuTotalPrice)}`}</span>
-            </div>
-            <div className="flex flex-row justify-between">
-              <span className="text-[#7c7c7c]">
-                {/* 배송비 */}
-                {`ค่าจัดส่ง`}
-              </span>
-              <span>{`₩ ${adjusted_delivery_fee ? insertCommas(adjusted_delivery_fee) : ''}`}</span>
-            </div>
-            <div className="flex flex-row justify-between">
-              <span className="text-[#7c7c7c]">
-                {/* 서비스비용 */}
-                {`ค่าบริการ`}
-              </span>
-              <span>{`₩ ${insertCommas(serveis_money)}`}</span>
-            </div>
-            
-            {/* <button
-              className="w-full rounded-sm bg-[#000000]/70 py-3 text-white"
-              onClick={Resets}
-            >리셋</button> */}
 
-            <div className="flex flex-row justify-between " style={{borderTop:"1px solid",borderColor:"#CCCCCC"}}>
+        <div className="flex flex-row justify-between ">
               <span className="text-[#7c7c7c] mt-6 ">
                 {/* 쿠폰함 */}
                 <span className='flex flex-row'>
@@ -392,10 +365,8 @@ const Cart: NextPage = () => {
               // 쿠폰적용,쿠폰금액
             >{Coupon_Pay === 0?`ใช้คูปอง`:`ขาย ₩ ${Coupon_Pay}`}
             </button>
-
-          </div>
           
-          <div className="flex flex-row justify-between " >
+          <div className="flex flex-row justify-between mt-5" >
               <span className="text-[#7c7c7c] ">
                 {/* 내포인트 */}
                 
@@ -407,12 +378,53 @@ const Cart: NextPage = () => {
             </div>
           
           <button
-            className="w-full rounded-sm bg-[#1642df]/70 py-3 text-white mt-3"
+            className="w-full rounded-sm bg-[#1642df]/70 py-3 text-white"
             onClick={handleClickUsePoint}
           >
             {/* 포인트 사용 */}
             {`ใช้คะแนน ₩ ${insertCommas(UsePoint)}`}
           </button>
+
+          <div className="my-4 space-y-5 mt-8">
+            <div 
+              className="flex flex-row justify-between"
+              style={{borderTop:"1px solid",borderColor:"#CCCCCC"}}
+            >
+              <span className="text-[#7c7c7c] mt-3">
+                {/* 총 */}
+                {`ยอดรวม`}
+              </span>
+              <span className='mt-3'>{`₩ ${insertCommas(menuTotalPrice)}`}</span>
+            </div>
+            <div className="flex flex-row justify-between">
+              <span className="text-[#7c7c7c]">
+                {/* 배송비 */}
+                {`ค่าจัดส่ง`}
+              </span>
+              <span>{`₩ ${adjusted_delivery_fee ? insertCommas(adjusted_delivery_fee) : ''}`}</span>
+            </div>
+            <div 
+              className="flex flex-row justify-between"
+              style={{borderBottom:"1px solid",borderColor:"#CCCCCC"}}
+            >
+              <span className="text-[#7c7c7c]  mb-3">
+                {/* 서비스비용 */}
+                {`ค่าบริการ`}
+              </span>
+              <span>{`₩ ${insertCommas(serveis_money)}`}</span>
+            </div>
+            <p className='flex flex-row justify-between'>
+              <p className="text-[#FF3333] font-bold text-[20px]">{`จำนวนเงินที่ชำระ`}</p>
+              <p className="text-[#FF3333] font-bold text-[20px]">{`₩ ${isEmpty(storedCart) ? '0' : cartTotalCombinedPrice()}`}</p>
+            </p>
+            {/* <button
+              className="w-full rounded-sm bg-[#000000]/70 py-3 text-white"
+              onClick={Resets}
+            >리셋</button> */}
+
+            
+
+          </div>
           
           {/* <div className="mt-3 rounded-md bg-[#ddd] p-3 text-[#333]">
             {`ยอดเงินฝากจาก FASTFOOD คะแนนสามารถแปลงเป็นคะแนนและใช้แทนเงินสดได้`}
