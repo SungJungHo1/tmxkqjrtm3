@@ -62,6 +62,7 @@ const Cart: NextPage = () => {
         Coupon_Name = res.data.coupon_List
         Coupon_Li = res.data.coupon_List
         setMyPoint(res.data.Point)
+        setCoupon_List(res.data.coupon_List)
       })
     let Options = {}
     Coupon_Name.map((is)=>{Options[is.쿠폰번호]=is.쿠폰내용})
@@ -233,7 +234,7 @@ const Cart: NextPage = () => {
       }).then((res) => {
         setCoupon_List(res.data.coupon_List)
       })
-  },[])
+  },[UserId])
 
   // 포인트 사용 함수
   const handleClickUsePoint = async () => {
