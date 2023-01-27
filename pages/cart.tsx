@@ -403,11 +403,11 @@ const Cart: NextPage = () => {
             <p className=' flex flex-row my-auto items-center'>
               <p className='mr-2 font-bold text-[#1642df] text-[27px]'
                 >
-                {`₩ ${insertCommas(UsePoint + Coupon_Pay)}`}
+                {`₩${insertCommas(UsePoint + Coupon_Pay)}`}
                 {/* {`₩ ${insertCommas(30000)}`} */}
               </p>
                 <p className='mr-2 font-bold  text-[15px]'>
-                  {`คุณได้รับส่วนลด.`}
+                  {`คุณได้รับส่วนลด`}
                 </p>
             </p>
           </div>
