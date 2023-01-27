@@ -55,10 +55,6 @@ const Cart: NextPage = () => {
     setUsePoint(0)
   }
 
-  const RefExample = () => {
-    const scrollRef = useRef();
-  };
-
   const couponUse = async () =>{
     if(UsePoint > 0){
       //이미 할인
@@ -240,18 +236,20 @@ const Cart: NextPage = () => {
   // },[menuTotalPrice,MyPoint,adjusted_delivery_fee,serveis_money])
   
   useEffect(()=>{
+    
     axios
       .get(`https://www.fastfood.p-e.kr/find_User_Data2?User_ID=${encodeURIComponent(UserId)}`, {//http://127.0.0.1/service
       // .get(`https://www.fastfood.p-e.kr/find_User_Data2?User_ID=${encodeURIComponent('Ua80cd1a19a12cb88657950e300a68594')}`, {//
       // .get(`https://www.fastfood.p-e.kr/find_User_Data2?User_ID=${'U812329a68632f4237dea561c6ba1d413'}`, {
       }).then((res) => {
-        setCoupon_List(res.data.coupon_List)
+        setCoupon_List(res.data?.coupon_List)
       })
       scrollToBottom()
   },[UserId])
 
   // 포인트 사용 함수
   const handleClickUsePoint = async () => {
+    
     await axios
       .get(`https://www.fastfood.p-e.kr/find_User_Data2?User_ID=${encodeURIComponent(UserId)}`, {//http://127.0.0.1/service
       // .get(`https://www.fastfood.p-e.kr/find_User_Data2?User_ID=${encodeURIComponent('Ua80cd1a19a12cb88657950e300a68594')}`, {//
@@ -310,6 +308,109 @@ const Cart: NextPage = () => {
       </Head>
       <Toast message="ตะกร้าสินค้าว่างเปล่" open={showEmptyCart} />
       <div className="flex-1 overflow-auto px-5 pb-5">
+      <div className="flex flex-row justify-between ">
+              <span className="text-[#7c7c7c] mt-3 ">
+                {/* 쿠폰함 */}
+                <span className='flex flex-row'>
+                <p  className='mr-3 font-bold text-[#000000]'>{` มีคูปองอยู่`}</p>
+                <p className="text-[#000000] mr-3">{`(มีคูปองอยู่`} </p>
+                <p className="text-[#FF3333]">{`${Coupon_List?.length} ใบ`}</p>
+                <p>{')'}</p>
+                </span>
+              </span>
+
+            </div>
+            
+            <button
+              className="w-full rounded-sm bg-primary py-3 text-white "
+              onClick={couponUse}
+              // 쿠폰사용금액
+              // 쿠폰적용,쿠폰금액
+            >{`ใช้คูปอง`}
+            </button>
+          
+          <div className="flex flex-row justify-between mt-5" >
+              <span className="text-[#7c7c7c] ">
+                {/* 내포인트 */}
+                
+                <p className='mr-4 flex flex-row'>
+                  <p className='mr-4 text-[#000000]'>{`พ้อยท์ของฉัน`}</p>
+                  <span className="text-[#FF3333]">{`${insertCommas(MyPoint)}`}</span>
+                </p>
+              </span>
+            </div>
+          
+          <button
+            className="w-full rounded-sm bg-primary py-3 text-white"
+            onClick={handleClickUsePoint}
+          >
+            {/* 포인트 사용 */}
+            {`ใช้พ้อยท์`}
+          </button>
+
+          <div className="my-4 space-y-2" style={{borderTop:"3px solid",borderColor:"#cccccc"}}>
+            <div className='w-full text-center text-[#000000] font-bold text-[25px]'>{`ข้อมูลการสั่งซื้อ`}</div>
+            <div 
+              className="flex flex-row justify-between"
+            >
+              <span className="text-[#7c7c7c] ">
+                {/* 총 */}
+                {`ยอดรวม`}
+              </span>
+              <span >{`${insertCommas(menuTotalPrice)}`}</span>
+            </div>
+            
+            <div className="flex flex-row justify-between">
+              <span className="text-[#7c7c7c]">
+                {/* 배송비 */}
+                {`ค่าจัดส่ง`}
+              </span>
+              <span>{`${adjusted_delivery_fee ? insertCommas(adjusted_delivery_fee) : ''}`}</span>
+            </div>
+            <div 
+              className=" justify-between"
+            >
+              <p className='flex flex-row  justify-between'>
+                <span className="text-[#7c7c7c]  mb-3">
+                  {/* 서비스비용 */}
+                  {`ค่าบริการ`}
+                </span>
+                <span>{`${insertCommas(serveis_money)}`}</span>
+              </p> 
+              <p className='flex flex-row justify-between '>
+                <p className="text-[#1642df] font-bold text-[18px]">{`ส่วนลดทันที `}</p>
+                <p className="text-[#1642df] font-bold text-[18px]">{`₩ -${insertCommas(UsePoint + Coupon_Pay)}`}</p>
+              </p>
+            </div>
+              
+              <p className='flex flex-row justify-between'>
+                <p className="text-[#FF3333] font-bold text-[20px]">{`จำนวนเงินที่ต้องชำระ`}</p>
+                <p className="text-[#FF3333] font-bold text-[20px]">{`${isEmpty(storedCart) ? '0' : cartTotalCombinedPrice()}`}</p>
+              </p>
+            {/* <button
+              className="w-full rounded-sm bg-[#000000]/70 py-3 text-white"
+              onClick={Resets}
+            >리셋</button> */}
+
+            
+
+          </div>
+          
+          <div 
+            className="mt-3 rounded-md p-3 text-[#333] grid place-items-center"
+            style={{border:"2px solid"}}
+          >
+            <p className=' flex flex-row my-auto items-center'>
+              <p className='mr-2 font-bold text-[#1642df] text-[27px]'
+                >
+                {`₩ ${insertCommas(UsePoint + Coupon_Pay)}`}
+                {/* {`₩ ${insertCommas(30000)}`} */}
+              </p>
+                <p className='mr-2 font-bold  text-[19px]'>
+                  {`คุณได้รับส่วนลด.`}
+                </p>
+            </p>
+          </div>
         {storedCart.map(({ menu, options, quantity, totalPrice }, index) => (
           <div key={`menu.menuId_${index}`} className="space-y-4 border-b border-gray-300 py-5">
             {menu.original_image ? (
@@ -372,108 +473,7 @@ const Cart: NextPage = () => {
         ))}
         <div>
 
-        <div className="flex flex-row justify-between ">
-              <span className="text-[#7c7c7c] mt-3 ">
-                {/* 쿠폰함 */}
-                <span className='flex flex-row'>
-                <p  className='mr-3 font-bold text-[#000000]'>{` มีคูปองอยู่`}</p>
-                <p className="text-[#000000] mr-3">{`(มีคูปองอยู่`} </p>
-                <p className="text-[#FF3333]">{`${Coupon_List.length} ใบ`}</p>
-                <p>{')'}</p>
-                </span>
-              </span>
-
-            </div>
-            
-            <button
-              className="w-full rounded-sm bg-primary py-3 text-white "
-              onClick={couponUse}
-              // 쿠폰사용금액
-              // 쿠폰적용,쿠폰금액
-            >{`ใช้คูปอง`}
-            </button>
-          
-          <div className="flex flex-row justify-between mt-5" >
-              <span className="text-[#7c7c7c] ">
-                {/* 내포인트 */}
-                
-                <p className='mr-4 flex flex-row'>
-                  <p className='mr-4 text-[#000000]'>{`พ้อยท์ของฉัน`}</p>
-                  <span className="text-[#FF3333]">{`${insertCommas(MyPoint)}`}</span>
-                </p>
-              </span>
-            </div>
-          
-          <button
-            className="w-full rounded-sm bg-primary py-3 text-white"
-            onClick={handleClickUsePoint}
-          >
-            {/* 포인트 사용 */}
-            {`ใช้พ้อยท์`}
-          </button>
-
-          <div className="my-4 space-y-5" style={{borderTop:"3px solid",borderColor:"#cccccc"}}>
-            <div className='w-full text-center text-[#000000] font-bold text-[25px]'>{`ข้อมูลการสั่งซื้อ`}</div>
-            <div 
-              className="flex flex-row justify-between"
-            >
-              <span className="text-[#7c7c7c] ">
-                {/* 총 */}
-                {`ยอดรวม`}
-              </span>
-              <span >{`${insertCommas(menuTotalPrice)}`}</span>
-            </div>
-            
-            <div className="flex flex-row justify-between">
-              <span className="text-[#7c7c7c]">
-                {/* 배송비 */}
-                {`ค่าจัดส่ง`}
-              </span>
-              <span>{`${adjusted_delivery_fee ? insertCommas(adjusted_delivery_fee) : ''}`}</span>
-            </div>
-            <div 
-              className=" justify-between"
-            >
-              <p className='flex flex-row  justify-between'>
-                <span className="text-[#7c7c7c]  mb-3">
-                  {/* 서비스비용 */}
-                  {`ค่าบริการ`}
-                </span>
-                <span>{`${insertCommas(serveis_money)}`}</span>
-              </p> 
-              <p className='flex flex-row justify-between mt-2'>
-                <p className="text-[#1642df] font-bold text-[18px]">{`ส่วนลดทันที `}</p>
-                <p className="text-[#1642df] font-bold text-[18px]">{`₩ -${insertCommas(UsePoint + Coupon_Pay)}`}</p>
-              </p>
-            </div>
-              
-              <p className='flex flex-row justify-between'>
-                <p className="text-[#FF3333] font-bold text-[20px]">{`จำนวนเงินที่ต้องชำระ`}</p>
-                <p className="text-[#FF3333] font-bold text-[20px]">{`${isEmpty(storedCart) ? '0' : cartTotalCombinedPrice()}`}</p>
-              </p>
-            {/* <button
-              className="w-full rounded-sm bg-[#000000]/70 py-3 text-white"
-              onClick={Resets}
-            >리셋</button> */}
-
-            
-
-          </div>
-          
-          <div 
-            className="mt-3 rounded-md p-3 text-[#333] grid place-items-center"
-            style={{border:"2px solid"}}
-          >
-            <p className=' flex flex-col my-auto items-center'>
-              <p className='mr-2 font-bold text-[#1642df] text-[27px]'
-                >
-                {`₩ ${insertCommas(UsePoint + Coupon_Pay)}`}
-              </p>
-                <p className='mr-2 font-bold  text-[19px]'>
-                  {`คุณได้รับส่วนลด.`}
-                </p>
-            </p>
-          </div>
+        
         </div>
       </div>
       <button
