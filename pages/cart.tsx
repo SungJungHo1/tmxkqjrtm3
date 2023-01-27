@@ -406,7 +406,7 @@ const Cart: NextPage = () => {
                 {`₩ ${insertCommas(UsePoint + Coupon_Pay)}`}
                 {/* {`₩ ${insertCommas(30000)}`} */}
               </p>
-                <p className='mr-2 font-bold  text-[19px]'>
+                <p className='mr-2 font-bold  text-[15px]'>
                   {`คุณได้รับส่วนลด.`}
                 </p>
             </p>
