@@ -25,23 +25,23 @@ const Order: NextPage = () => {
 
   const [liffObject, setLiffObject] = useState<Liff | null>(null);
 
-  // useEffect(() => {
-  //   let liff_ID = "1657404178-OkbrA8Ae"
-  //   // to avoid `window is not defined` error
-  //   async function liffLogin() {
-  //     const liff = (await import('@line/liff')).default;
-  //     try {
-  //       await liff.init({ liffId: liff_ID }).then(() => {
-  //         // console.log("LIFF init succeeded.");
-  //         setLiffObject(liff);
-  //       })
-  //     } catch (err) {
-  //       console.error('liff init error', err.message);
-  //     }
-  //   }
-  //   liffLogin();
+  useEffect(() => {
+    let liff_ID = "1657404178-OkbrA8Ae"
+    // to avoid `window is not defined` error
+    async function liffLogin() {
+      const liff = (await import('@line/liff')).default;
+      try {
+        await liff.init({ liffId: liff_ID }).then(() => {
+          // console.log("LIFF init succeeded.");
+          setLiffObject(liff);
+        })
+      } catch (err) {
+        console.error('liff init error', err.message);
+      }
+    }
+    liffLogin();
 
-  // }, []);
+  }, []);
 
   useEffect(() => {
     if (liffObject !== null) {
