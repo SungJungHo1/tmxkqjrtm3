@@ -273,20 +273,29 @@ const Cart: NextPage = () => {
       preConfirm: (Pay) => {
         if (Coupon_Pay > 0){
           Swal2.fire(`ลูกค้าได้รับส่วนลดแล้วค่ะ.`)
-        
-        }else if(menuTotalPrice + adjusted_delivery_fee + serveis_money < Pay){
-          setUsePoint(Number(menuTotalPrice + adjusted_delivery_fee + serveis_money))
-          // 음식가격 이하로만 포인트 사용 가능합니다.
-          Swal2.fire("ใช้พ้อยท์ได้ต่ำกว่าค่าอาหารเท่านั้นค่ะ.")
-        }else if(Pay === ""){
-          //포인트를 입력해주세요
-          Swal2.fire("กรุณาใส่จำนวนพ้อยท์")
-        }else if(Pay > MyPoint){
-          // 3. 사용할수 있는포인트를 초과하셨습니다
-          Swal2.fire("ลูกค้าใส่พ้อยท์เกินจำนวนที่มีอยู่ค่ะ")
-        }else{
-          setUsePoint(Number(Pay))
-          Swal2.fire(`ลูกค้าได้ใช้${Pay}พ้อยท์แล้วค่ะ.`)
+          return
+        }
+        else{
+          if(menuTotalPrice + adjusted_delivery_fee + serveis_money < Pay){
+            setUsePoint(Number(menuTotalPrice + adjusted_delivery_fee + serveis_money))
+            // 음식가격 이하로만 포인트 사용 가능합니다.
+            Swal2.fire("ใช้พ้อยท์ได้ต่ำกว่าค่าอาหารเท่านั้นค่ะ.")
+            return
+          }else if(Pay === ""){
+            //포인트를 입력해주세요
+            setUsePoint(0)
+            Swal2.fire("กรุณาใส่จำนวนพ้อยท์")
+            return
+          }else if(Pay > MyPoint){
+            // 3. 사용할수 있는포인트를 초과하셨습니다
+            setUsePoint(0)
+            Swal2.fire("ลูกค้าใส่พ้อยท์เกินจำนวนที่มีอยู่ค่ะ")
+            return
+          }else{
+            setUsePoint(Number(Pay))
+            Swal2.fire(`ลูกค้าได้ใช้${Pay}พ้อยท์แล้วค่ะ.`)
+            return
+          }
         }
         
       },
