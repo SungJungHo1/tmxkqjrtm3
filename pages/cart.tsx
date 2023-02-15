@@ -87,54 +87,54 @@ const Cart: NextPage = () => {
     
     let Options = {}
     Coupon_Name.map((is)=>{Options[is.쿠폰번호]=is.쿠폰내용})
-  //쿠폰적용
-  const { value: Coupon } = await Swal2.fire({
-    //쿠폰함
-    title: 'กล่องคูปอง',
-    input: 'select',
-    inputOptions: Options,
-    // 취소
-    cancelButtonText:"ยกเลิก",
-    // 선택
-    confirmButtonText:"เลือก",
-    inputPlaceholder: `เลือกคูปอง`,
-    showCancelButton: true,
-    inputValidator: (value) => {
-      return new Promise((resolve) => {
-        if (value !== "") resolve("")
-      })
-    }
-  })
-  
-  if (Coupon) {
+    //쿠폰적용
+    const { value: Coupon } = await Swal2.fire({
+      //쿠폰함
+      title: 'กล่องคูปอง',
+      input: 'select',
+      inputOptions: Options,
+      // 취소
+      cancelButtonText:"ยกเลิก",
+      // 선택
+      confirmButtonText:"เลือก",
+      inputPlaceholder: `เลือกคูปอง`,
+      showCancelButton: true,
+      inputValidator: (value) => {
+        return new Promise((resolve) => {
+          if (value !== "") resolve("")
+        })
+      }
+    })
     
-    let Coupons = {}
-    Coupon_Name.map((ii)=>{
-        if(ii.쿠폰번호 === Coupon){
-          Coupons["쿠폰이름"] = ii.쿠폰내용
-          Coupons["쿠폰번호"] = ii.쿠폰번호
-          console.log(Coupons["쿠폰이름"])
-          console.log(Coupons["쿠폰번호"])
-        }
-      })
-    if (Coupons){
-      Swal2.fire(`ใช้คูปองแล้ว.`)
-    }
-    else if (Coupons['쿠폰이름'] === "undefined"){
-      Swal2.fire(`ใช้คูปองแล้ว.`)
-    }
+    if (Coupon) {
+      
+      let Coupons = {}
+      Coupon_Name.map((ii)=>{
+          if(ii.쿠폰번호 === Coupon){
+            Coupons["쿠폰이름"] = ii.쿠폰내용
+            Coupons["쿠폰번호"] = ii.쿠폰번호
+            console.log(Coupons["쿠폰이름"])
+            console.log(Coupons["쿠폰번호"])
+          }
+        })
+      if (Coupons){
+        Swal2.fire(`ใช้คูปองแล้ว.`)
+      }
+      else if (Coupons['쿠폰이름'] === "undefined"){
+        Swal2.fire(`ใช้คูปองแล้ว.`)
+      }
 
-    if (menuTotalPrice + adjusted_delivery_fee + serveis_money <= UsePoint + serveis_money){
-      setCoupon_Code(Coupons["쿠폰번호"])
-      setCoupon_Pay(serveis_money)
-      setUsePoint(menuTotalPrice + adjusted_delivery_fee + serveis_money - serveis_money)
+      if (menuTotalPrice + adjusted_delivery_fee + serveis_money <= UsePoint + serveis_money){
+        setCoupon_Code(Coupons["쿠폰번호"])
+        setCoupon_Pay(serveis_money)
+        setUsePoint(menuTotalPrice + adjusted_delivery_fee + serveis_money - serveis_money)
+      }
+      else{
+        setCoupon_Code(Coupons["쿠폰번호"])
+        setCoupon_Pay(serveis_money)
+        return
+      }
     }
-    else{
-      setCoupon_Code(Coupons["쿠폰번호"])
-      setCoupon_Pay(serveis_money)
-      return
-    }
-  }
 
   }
 
@@ -165,6 +165,31 @@ const Cart: NextPage = () => {
 
     Setter()
   }, []);
+
+  useEffect(() => {
+    const Setter = async () => {
+      scrollToBottom()
+      let points
+      await find_U_D().then((data)=>{
+        points = data.Point
+      })
+
+      if(menuTotalPrice + adjusted_delivery_fee + serveis_money < points){
+        setUsePoint(Number(menuTotalPrice + adjusted_delivery_fee + serveis_money))
+        setCoupon_Pay(0)
+        setUse_Repoint(0)
+        return
+      }
+      else{
+        setUsePoint(Number(points))
+        setCoupon_Pay(0)
+        setUse_Repoint(0)
+        return
+      }
+    }
+
+    Setter()
+  }, [UserId]);
 
   const cartTotalCombinedPrice = () => {
     if (adjusted_delivery_fee) {
