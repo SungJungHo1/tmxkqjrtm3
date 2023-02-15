@@ -25,10 +25,12 @@ const Cart: NextPage = () => {
   const [crrClickedIndex, setCrrClickedIndex] = useState()
   const [serveis_money, setServeis_money] = useState(3000);
   const [MyPoint, setMyPoint] = useState(0);
+  const [MyRePoint, setMyRePoint] = useState(0);
   const [UsePoint, setUsePoint] = useState(0);
   const [Coupon_List, setCoupon_List] = useState([]);
   const [Coupon_Code, setCoupon_Code] = useState("not");
   const [Coupon_Pay, setCoupon_Pay] = useState(0);
+  const [Use_Repoint, setUse_Repoint] = useState(0);
   const [UserId, setUserId] = useState("");
 
   const messageBoxRef = useRef<HTMLUListElement>();
@@ -55,26 +57,34 @@ const Cart: NextPage = () => {
     setUsePoint(0)
   }
 
+  const find_U_D = async ()=>{
+    let data
+    await axios
+      .get(`https://www.fastfood.p-e.kr/find_User_Data2?User_ID=${encodeURIComponent(UserId)}`, {//http://127.0.0.1/service
+      // .get(`https://www.fastfood.p-e.kr/find_User_Data2?User_ID=${encodeURIComponent('Ua80cd1a19a12cb88657950e300a68594')}`, {//
+      // .get(`https://www.fastfood.p-e.kr/find_User_Data2?User_ID=${'Ua80cd1a19a12cb88657950e300a68594'}`, {
+      }).then((res) => {
+        setCoupon_List(res.data.coupon_List)
+        setMyPoint(res.data.Point)
+        setMyRePoint(res.data.Re_Point)
+        data =  res.data
+      })
+    return data
+  }
+
   const couponUse = async () =>{
-    if(UsePoint > 0){
+    let Coupon_Name
+    if(Use_Repoint > 0){
       //이미 할인
       Swal2.fire("ลูกค้าได้รับส่วนลดแล้วค่ะ")
       return
       
     }
     scrollToBottom()
-    let Coupon_Name
-    let Coupon_Li
-    await axios
-      .get(`https://www.fastfood.p-e.kr/find_User_Data2?User_ID=${encodeURIComponent(UserId)}`, {//http://127.0.0.1/service
-      // .get(`https://www.fastfood.p-e.kr/find_User_Data2?User_ID=${encodeURIComponent('Ua80cd1a19a12cb88657950e300a68594')}`, {//
-      
-      }).then((res) => {
-        Coupon_Name = res.data.coupon_List
-        Coupon_Li = res.data.coupon_List
-        setMyPoint(res.data.Point)
-        setCoupon_List(res.data.coupon_List)
-      })
+    await find_U_D().then((val)=>{
+      Coupon_Name = val.coupon_List
+    })
+    
     let Options = {}
     Coupon_Name.map((is)=>{Options[is.쿠폰번호]=is.쿠폰내용})
   //쿠폰적용
@@ -99,7 +109,7 @@ const Cart: NextPage = () => {
   if (Coupon) {
     
     let Coupons = {}
-    Coupon_Li.map((ii)=>{
+    Coupon_Name.map((ii)=>{
         if(ii.쿠폰번호 === Coupon){
           Coupons["쿠폰이름"] = ii.쿠폰내용
           Coupons["쿠폰번호"] = ii.쿠폰번호
@@ -113,8 +123,17 @@ const Cart: NextPage = () => {
     else if (Coupons['쿠폰이름'] === "undefined"){
       Swal2.fire(`ใช้คูปองแล้ว.`)
     }
-    setCoupon_Code(Coupons["쿠폰번호"])
-    setCoupon_Pay(serveis_money)
+
+    if (menuTotalPrice + adjusted_delivery_fee + serveis_money <= UsePoint + serveis_money){
+      setCoupon_Code(Coupons["쿠폰번호"])
+      setCoupon_Pay(serveis_money)
+      setUsePoint(menuTotalPrice + adjusted_delivery_fee + serveis_money - serveis_money)
+    }
+    else{
+      setCoupon_Code(Coupons["쿠폰번호"])
+      setCoupon_Pay(serveis_money)
+      return
+    }
   }
 
   }
@@ -123,12 +142,34 @@ const Cart: NextPage = () => {
     setUserId(sessionStorage.getItem("userId"))
     setServeis_money(Number(sessionStorage.getItem("Service_Money")))
     setMyPoint(Number(sessionStorage.getItem("User_Point")))
+    const Setter = async () => {
+      scrollToBottom()
+      let points
+      await find_U_D().then((data)=>{
+        points = data.Point
+      })
+
+      if(menuTotalPrice + adjusted_delivery_fee + serveis_money < points){
+        setUsePoint(Number(menuTotalPrice + adjusted_delivery_fee + serveis_money))
+        setCoupon_Pay(0)
+        setUse_Repoint(0)
+        return
+      }
+      else{
+        setUsePoint(Number(points))
+        setCoupon_Pay(0)
+        setUse_Repoint(0)
+        return
+      }
+    }
+
+    Setter()
   }, []);
 
   const cartTotalCombinedPrice = () => {
     if (adjusted_delivery_fee) {
       return insertCommas(
-        Number(menuTotalPrice) + Number(serveis_money) + Number(adjusted_delivery_fee) - Number(UsePoint) - Number(Coupon_Pay),
+        Number(menuTotalPrice) + Number(serveis_money) + Number(adjusted_delivery_fee) - Number(UsePoint) - Number(Coupon_Pay) - Number(Use_Repoint),
       )
     }
     return ''
@@ -185,7 +226,7 @@ const Cart: NextPage = () => {
             if (login === "fastfood1144"){
               if (menuTotalPrice >= Number(storedFoodStore.min_order_amount)) {
                 
-                router.push(`/order?fee=${adjusted_delivery_fee}&Coupon_Pay=${Coupon_Pay}&Use_Point=${UsePoint}&Coupon_Code=${Coupon_Code}`)
+                router.push(`/order?fee=${adjusted_delivery_fee}&Coupon_Pay=${Coupon_Pay}&Use_Point=${UsePoint}&Coupon_Code=${Coupon_Code}&Use_Repoint=${Use_Repoint}`)
               } else {
                 setShowMinOrderPopup(true)
               }
@@ -196,7 +237,7 @@ const Cart: NextPage = () => {
         
       } else {
         if (menuTotalPrice >= Number(storedFoodStore.min_order_amount)) {
-          router.push(`/order?fee=${adjusted_delivery_fee}&Coupon_Pay=${Coupon_Pay}&Use_Point=${UsePoint}&Coupon_Code=${Coupon_Code}`)
+          router.push(`/order?fee=${adjusted_delivery_fee}&Coupon_Pay=${Coupon_Pay}&Use_Point=${UsePoint}&Coupon_Code=${Coupon_Code}&Use_Repoint=${Use_Repoint}`)
         } else {
           setShowMinOrderPopup(true)
         }
@@ -215,7 +256,7 @@ const Cart: NextPage = () => {
         preConfirm: (login) => {
           if (login === "fastfood1144"){
             if (menuTotalPrice >= Number(storedFoodStore.min_order_amount)) {
-              router.push(`/order?fee=${adjusted_delivery_fee}&Coupon_Pay=${Coupon_Pay}&Use_Point=${UsePoint}&Coupon_Code=${Coupon_Code}`)
+              router.push(`/order?fee=${adjusted_delivery_fee}&Coupon_Pay=${Coupon_Pay}&Use_Point=${UsePoint}&Coupon_Code=${Coupon_Code}&Use_Repoint=${Use_Repoint}`)
             } else {
               setShowMinOrderPopup(true)
             }
@@ -234,30 +275,11 @@ const Cart: NextPage = () => {
   //     setUsePoint(MyPoint) 
   //   }
   // },[menuTotalPrice,MyPoint,adjusted_delivery_fee,serveis_money])
-  
-  useEffect(()=>{
-    
-    axios
-      .get(`https://www.fastfood.p-e.kr/find_User_Data2?User_ID=${encodeURIComponent(UserId)}`, {//http://127.0.0.1/service
-      // .get(`https://www.fastfood.p-e.kr/find_User_Data2?User_ID=${encodeURIComponent('Ua80cd1a19a12cb88657950e300a68594')}`, {//
-      // .get(`https://www.fastfood.p-e.kr/find_User_Data2?User_ID=${'U812329a68632f4237dea561c6ba1d413'}`, {
-      }).then((res) => {
-        setCoupon_List(res.data?.coupon_List)
-      })
-      scrollToBottom()
-  },[UserId])
 
   // 포인트 사용 함수
   const handleClickUsePoint = async () => {
     
-    await axios
-      .get(`https://www.fastfood.p-e.kr/find_User_Data2?User_ID=${encodeURIComponent(UserId)}`, {//http://127.0.0.1/service
-      // .get(`https://www.fastfood.p-e.kr/find_User_Data2?User_ID=${encodeURIComponent('Ua80cd1a19a12cb88657950e300a68594')}`, {//
-      // .get(`https://www.fastfood.p-e.kr/find_User_Data2?User_ID=${'U812329a68632f4237dea561c6ba1d413'}`, {
-      }).then((res) => {
-        setCoupon_List(res.data.coupon_List)
-        setMyPoint(res.data.Point)
-      })
+    find_U_D()
 
     Swal2.fire({
       input:'number',
@@ -284,7 +306,7 @@ const Cart: NextPage = () => {
             setUsePoint(0)
             Swal2.fire("กรุณาใส่จำนวนพ้อยท์")
             return
-          }else if(menuTotalPrice + adjusted_delivery_fee + serveis_money < Pay){
+          }else if(menuTotalPrice + adjusted_delivery_fee + serveis_money <= Pay){
             setUsePoint(Number(menuTotalPrice + adjusted_delivery_fee + serveis_money))
             // 음식가격 이하로만 포인트 사용 가능합니다.
             Swal2.fire("ใช้พ้อยท์ได้ต่ำกว่าค่าอาหารเท่านั้นค่ะ.")
@@ -299,6 +321,74 @@ const Cart: NextPage = () => {
         
       },
     })
+  }
+  // 리마인드 포인트 사용 함수
+  // const handleClickUseRePoint = async () => {
+    
+  //   find_U_D()
+
+  //   Swal2.fire({
+  //     input:'number',
+  //     inputLabel: 'พ้อยท์',
+  //     // 취소
+  //     cancelButtonText:"ยกเลิก",
+  //     // 선택
+  //     confirmButtonText:"เลือก",
+  //     inputPlaceholder:"กรุณาใส่จำนวนพ้อยท์",
+  //     showCancelButton: true,
+  //     preConfirm: (Pay) => {
+  //       if (Coupon_Pay > 0){
+  //         Swal2.fire(`ลูกค้าได้รับส่วนลดแล้วค่ะ.`)
+  //         return
+  //       }
+  //       else{
+  //         if(Pay > MyRePoint){
+  //           // 3. 사용할수 있는포인트를 초과하셨습니다
+  //           setUse_Repoint(0)
+  //           Swal2.fire("ลูกค้าใส่พ้อยท์เกินจำนวนที่มีอยู่ค่ะ")
+  //           return
+  //         }else if(Pay === ""){
+  //           //포인트를 입력해주세요
+  //           setUse_Repoint(0)
+  //           Swal2.fire("กรุณาใส่จำนวนพ้อยท์")
+  //           return
+  //         }else if(menuTotalPrice + adjusted_delivery_fee + serveis_money < Pay){
+  //           setUse_Repoint(Number(menuTotalPrice + adjusted_delivery_fee + serveis_money))
+  //           // 음식가격 이하로만 포인트 사용 가능합니다.
+  //           Swal2.fire("ใช้พ้อยท์ได้ต่ำกว่าค่าอาหารเท่านั้นค่ะ.")
+  //           return
+  //         }
+  //         else{
+  //           setUse_Repoint(Number(Pay))
+  //           Swal2.fire(`ลูกค้าได้ใช้${Pay}พ้อยท์แล้วค่ะ.`)
+  //           return
+  //         }
+  //       }
+        
+  //     },
+  //   })
+  // }
+
+  const handleClickUseRePoint = async () => {
+    
+    find_U_D()
+    if(Coupon_Pay > 0){
+      Swal2.fire("ลูกค้าได้รับส่วนลดแล้วค่ะ.")
+      return
+    }else if (menuTotalPrice + adjusted_delivery_fee + serveis_money < UsePoint + MyRePoint){
+      setUse_Repoint(Number(MyRePoint))
+      setUsePoint(menuTotalPrice + adjusted_delivery_fee + serveis_money - MyRePoint)
+      console.log(Use_Repoint)
+      console.log(UsePoint)
+    }
+    else if(menuTotalPrice + adjusted_delivery_fee + serveis_money < MyRePoint){
+      setUse_Repoint(Number(menuTotalPrice + adjusted_delivery_fee + serveis_money))
+      return
+    }
+    else{
+      setUse_Repoint(Number(MyRePoint))
+      return
+    }
   }
 
   return (
@@ -329,27 +419,36 @@ const Cart: NextPage = () => {
             >{`ใช้คูปอง`}
             </button>
           
-          <div className="flex flex-row justify-between mt-5" >
-              <span className="text-[#7c7c7c] ">
-                {/* 내포인트 */}
-                
-                <p className='mr-4 flex flex-row'>
-                  <p className='mr-4 text-[#000000]'>{`พ้อยท์ของฉัน`}</p>
-                  <span className="text-[#FF3333]">{`${insertCommas(MyPoint)}`}</span>
-                </p>
-              </span>
-            </div>
-          
-          <button
+          {/* <button
             className="w-full rounded-sm bg-primary py-3 text-white"
             onClick={handleClickUsePoint}
           >
-            {/* 포인트 사용 */}
+            포인트 사용
             {`ใช้พ้อยท์`}
+          </button> */}
+
+          <div className="flex flex-row justify-between mt-5" >
+            <span className="text-[#7c7c7c] ">
+              {/* 내포인트 */}
+              
+              <p className='mr-4 flex flex-row'>
+                <p className='mr-4 text-[#000000]'>{`พ้อยท์ของฉัน`}</p>
+                <span className="text-[#FF3333]">{`${insertCommas(MyRePoint)}`}</span>
+              </p>
+            </span>
+          </div>
+
+          <button
+            className="w-full rounded-sm bg-primary py-3 text-white"
+            onClick={handleClickUseRePoint}
+          >
+            {/* 리마인드 포인트 사용 */}
+            {`ใช้พ้อยท์ทั้งหมด`}
           </button>
+          
 
           <div className="my-4 space-y-2" style={{borderTop:"3px solid",borderColor:"#cccccc"}}>
-            <div className='w-full text-center text-[#000000] font-bold text-[25px]'>{`ข้อมูลการสั่งซื้อ`}</div>
+            <div className='w-full text-center text-[#000000] font-bold text-[25px] mt-3'>{`ข้อมูลการสั่งซื้อ`}</div>
             <div 
               className="flex flex-row justify-between"
             >
@@ -371,15 +470,32 @@ const Cart: NextPage = () => {
               className=" justify-between"
             >
               <p className='flex flex-row  justify-between'>
-                <span className="text-[#7c7c7c]  mb-3">
+                <span className="text-[#7c7c7c] mb-2">
                   {/* 서비스비용 */}
                   {`ค่าบริการ`}
                 </span>
                 <span>{`${insertCommas(serveis_money)}`}</span>
-              </p> 
-              <p className='flex flex-row justify-between '>
+              </p>
+
+              <p className='flex flex-row  justify-between'>
+                <span className="text-[#7c7c7c] mb-2">
+                  {/* 캐쉬 */}
+                  {`My Cash`}
+                </span>
+                <span>{`${insertCommas(UsePoint)}`}</span>
+              </p>
+
+              <p className='flex flex-row  justify-between'  style={{borderBottom:"3px solid",borderColor:"#cccccc"}}>                
+                <span className="text-[#7c7c7c] mb-2">
+                  {/* 서비스비용 */}
+                  {`Point&Coupon`}
+                </span>
+                <span>{`${insertCommas(Use_Repoint + Coupon_Pay)}`}</span>
+              </p>
+
+              <p className='flex flex-row justify-between mt-2'>
                 <p className="text-[#1642df] font-bold text-[18px]">{`ส่วนลดทันที `}</p>
-                <p className="text-[#1642df] font-bold text-[18px]">{`₩ -${insertCommas(UsePoint + Coupon_Pay)}`}</p>
+                <p className="text-[#1642df] font-bold text-[18px]">{`₩ -${insertCommas(UsePoint + Coupon_Pay + Use_Repoint)}`}</p>
               </p>
             </div>
               
@@ -403,7 +519,7 @@ const Cart: NextPage = () => {
             <p className=' flex flex-row my-auto items-center'>
               <p className='mr-2 font-bold text-[#1642df] text-[27px]'
                 >
-                {`₩${insertCommas(UsePoint + Coupon_Pay)}`}
+                {`₩${insertCommas(UsePoint + Coupon_Pay + Use_Repoint)}`}
                 {/* {`₩ ${insertCommas(30000)}`} */}
               </p>
                 <p className='mr-2 font-bold  text-[15px]'>

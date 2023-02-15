@@ -183,6 +183,7 @@ const Order: NextPage<{
     }
     
     const File_Dates = await handleFileOnChange(data.addressPhoto[0])
+    
     await axios //"U812329a68632f4237dea561c6ba1d413"
       .postForm(`https://www.fastfood.p-e.kr/pushOrder?userId=${userId}&userName=${encodeURIComponent(userName)}&new_cus=${new_Cus}&delivery_fee=${router.query.fee}&Service_Money=${serveis_money}&ImageIn=${data.addressPhoto[0] !== undefined ? 'yes' : 'no'}`, {
         // .postForm(`https://www.fastfood.p-e.kr/pushOrder?userId=${'U812329a68632f4237dea561c6ba1d413'}&userName=${'크턱'}&new_cus=${new_Cus}&delivery_fee=${router.query.fee}&Service_Money=${serveis_money}&ImageIn=${data.addressPhoto[0] !== undefined ? 'yes' : 'no'}`, {
@@ -197,7 +198,8 @@ const Order: NextPage<{
         phone:sessionStorage.getItem("phone"),
         use_point:Number(router.query.Use_Point),
         Coupon_Pay:Number(router.query.Coupon_Pay),
-        Coupon_Code:String(router.query.Coupon_Code)
+        Coupon_Code:String(router.query.Coupon_Code),
+        use_Repoint:Number(router.query.Use_Repoint)
       })
       .then((res) => {
         Messege = res.data.datas
