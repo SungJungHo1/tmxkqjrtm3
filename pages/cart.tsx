@@ -401,10 +401,17 @@ const Cart: NextPage = () => {
       Swal2.fire("ลูกค้าได้รับส่วนลดแล้วค่ะ.")
       return
     }else if (menuTotalPrice + adjusted_delivery_fee + serveis_money < UsePoint + MyRePoint){
-      setUse_Repoint(Number(MyRePoint))
-      setUsePoint(menuTotalPrice + adjusted_delivery_fee + serveis_money - MyRePoint)
-      console.log(Use_Repoint)
-      console.log(UsePoint)
+      if(menuTotalPrice + adjusted_delivery_fee + serveis_money < MyRePoint){
+        setUse_Repoint(Number(menuTotalPrice + adjusted_delivery_fee + serveis_money))
+        setUsePoint(0)
+        return
+      }
+      else{
+        setUse_Repoint(Number(MyRePoint))
+        setUsePoint(menuTotalPrice + adjusted_delivery_fee + serveis_money - MyRePoint)
+        console.log(Use_Repoint)
+        console.log(UsePoint)
+      }
     }
     else if(menuTotalPrice + adjusted_delivery_fee + serveis_money < MyRePoint){
       setUse_Repoint(Number(menuTotalPrice + adjusted_delivery_fee + serveis_money))
