@@ -230,7 +230,7 @@ const Home: NextPage<{
           <img className="h-24 w-24 rounded-full bg-white" src={pictureUrl !== "" ? pictureUrl : null} alt="" />
           <div className="ml-4 text-[22px] text-white">
             <div className="font-bold">{displayName}</div>
-            <div className='text-[14px]'>
+            <div className='text-[14px] font-bold'>
               <div>
                 {User_Point.toLocaleString('ko-KR')} Cash 
               </div>
