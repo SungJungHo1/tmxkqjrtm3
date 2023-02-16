@@ -28,6 +28,8 @@ const Home: NextPage<{
 }> = ({ position, popularMenu, liff, liffError }) => {
   const [userId, setUserId] = useState("");
   const [displayName, setDisplayName] = useState("");
+  const [MyPoint, setMyPoint] = useState(0);
+  const [MyCoupon, setMyCoupon] = useState([]);
   const [pictureUrl, setPictureUrl] = useState("");
   const [User_Point, setUser_Point] = useState(0);
   const [position_Local, setPosition_Local] = useState({latitude: 0,
@@ -94,7 +96,7 @@ const Home: NextPage<{
     })
   }
   const check_User_Data = (User,UserName) => {
-    console.log("sdsdsd")
+    // console.log("sdsdsd")
     if (encodeURIComponent(User) ==="null"){
       Pushalret();
       return
@@ -102,8 +104,13 @@ const Home: NextPage<{
     axios
       // .get(`https://www.fastfood.p-e.kr/find_User_Data?User_ID=${encodeURIComponent(User)}`, {//http://127.0.0.1/service
       .get(`https://www.fastfood.p-e.kr/find_User_Data2?User_ID=${encodeURIComponent(User)}`, {//
-      // .get(`https://www.fastfood.p-e.kr/find_User_Data2?User_ID=${'U812329a68632f4237dea561c6ba1d413'}`, {
+      // .get(`https://www.fastfood.p-e.kr/find_User_Data2?User_ID=${'Ua80cd1a19a12cb88657950e300a68594'}`, {
       }).then((res) => {
+        console.log(res)
+        setDisplayName(res.data.UserName)
+        setDisplayName(res.data.UserName)
+        setMyPoint(res.data.Re_Point)
+        setMyCoupon(res.data.coupon_List)
         if (res.data){
           if (res.data.UserName !== UserName){
             axios.get(`https://www.fastfood.p-e.kr/UUName?UserName=${encodeURIComponent(UserName)}&UserId=${encodeURIComponent(User)}`, {})
@@ -219,14 +226,19 @@ const Home: NextPage<{
         >
           <img className="h-14 w-18" src={"/images/Line-Logo-700x394.png"} alt="" />
         </button>
-        <div className="flex h-24 w-full flex-row items-center rounded-md bg-primary p-4" style={{ fontFamily: "Sriracha-Regular" }}>
-          <img className="h-14 w-14 rounded-full bg-white" src={pictureUrl !== "" ? pictureUrl : null} alt="" />
-          <div className="ml-4 text-lg text-white">
+        <div className="flex h-26 w-full flex-row items-center rounded-md bg-primary p-4" style={{ fontFamily: "Sriracha-Regular" }}>
+          <img className="h-24 w-24 rounded-full bg-white" src={pictureUrl !== "" ? pictureUrl : null} alt="" />
+          <div className="ml-4 text-[22px] text-white">
             <div className="font-bold">{displayName}</div>
-            <div>
-              {User_Point.toLocaleString('ko-KR')} point <span className="ml-5">{"NORMAL"}</span>
+            <div className='text-[14px]'>
+              <div>
+                {User_Point.toLocaleString('ko-KR')} Cash 
+              </div>
+              <div className="font-bold">{MyPoint.toLocaleString('ko-KR')} Point</div>
+              <div className="font-bold">{MyCoupon.length} Coupon</div>
             </div>
           </div>
+          
         </div>
         {/* <CustomSelect UserAdd={UserAdd} localPos={seter}/> */}
         <select className='w-full rounded-md bg-primary' style={{ fontFamily: "Sriracha-Regular" ,borderBlockColor:"white",color:"white"}} onChange={handleChange}>
