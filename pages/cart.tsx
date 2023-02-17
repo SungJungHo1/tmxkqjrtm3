@@ -221,10 +221,12 @@ const Cart: NextPage = () => {
       if (storedCart[index].quantity !== 1) {
         dispatch(minusQuantity(index))
         Setter()
+        
       }
     } else if (type === 'plus') {
       dispatch(plusQuantity(index))
       Setter()
+
     }
   }
 
