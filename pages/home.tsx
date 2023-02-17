@@ -136,7 +136,6 @@ const Home: NextPage<{
               imageHeight: 500,
               imageAlt: 'Custom image',
             })
-            select_Ref.current.focus();
           }else{
             Pushalret();
           }
@@ -308,8 +307,7 @@ const Home: NextPage<{
       search={
         
         <button className="h-10 w-full rounded-md" style={{ fontFamily: "Sriracha-Regular" ,backgroundColor:"#E0E0E0"}} onClick={()=>{
-            // router.push(`/testpage?UserId=${userId}&Ordered=${false}`,'/OrderPage')
-            select_Ref.current.focus()
+            router.push(`/testpage?UserId=${userId}&Ordered=${false}`,'/OrderPage')
             }} >
               <p>รายละเอียดการสั่งซื้อ</p>
         </button>
