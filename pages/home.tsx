@@ -41,6 +41,7 @@ const Home: NextPage<{
   const [serveis_ment, setServeis_ment] = useState("");
   const [On_User, setOn_User] = useState("On");
   const [UserAdd,setUserAdd] = useState([]);
+  const [forc,setforc] = useState(true);
   const router = useRouter()
   const select_Ref = useRef(null)
   
@@ -187,7 +188,7 @@ const Home: NextPage<{
           },
         )      
         setpopularMenu_Local(popularMenuRes.data)
-        select_Ref.current.openMenuOnFocus(false)
+        setforc(false)
         return
     }})
     }
@@ -288,7 +289,7 @@ const Home: NextPage<{
               [{'value': '12121', 'label': 'ไม่มีที่อยู่ที่บันทึกไว้ค่ะ'}]
               :return_Add()}
             isSearchable ={false}
-            openMenuOnFocus = {true}
+            openMenuOnFocus = {forc}
             onChange={handleChange}
             className='w-full rounded-md bg-primary' 
             ref={select_Ref} 
