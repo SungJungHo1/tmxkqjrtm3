@@ -109,10 +109,10 @@ const Home: NextPage<{
   }
   const check_User_Data = (User,UserName) => {
     // console.log("sdsdsd")
-    // if (encodeURIComponent(User) ==="null"){
-    //   Pushalret();
-    //   return
-    // }
+    if (encodeURIComponent(User) ==="null"){
+      Pushalret();
+      return
+    }
     axios
       // .get(`https://www.fastfood.p-e.kr/find_User_Data?User_ID=${encodeURIComponent(User)}`, {//http://127.0.0.1/service
       .get(`https://www.fastfood.p-e.kr/find_User_Data2?User_ID=${encodeURIComponent(User)}`, {//
