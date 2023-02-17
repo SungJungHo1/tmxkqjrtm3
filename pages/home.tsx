@@ -136,6 +136,7 @@ const Home: NextPage<{
               imageHeight: 500,
               imageAlt: 'Custom image',
             })
+            select_Ref.current.focus()
           }else{
             Pushalret();
           }
