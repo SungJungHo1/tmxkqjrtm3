@@ -166,27 +166,28 @@ const Cart: NextPage = () => {
     Setter()
   }, []);
 
-  useEffect(() => {
-    const Setter = async () => {
-      scrollToBottom()
-      let points
-      await find_U_D().then((data)=>{
-        points = data.Point
-      })
+  const Setter = async () => {
+    scrollToBottom()
+    let points
+    await find_U_D().then((data)=>{
+      points = data.Point
+    })
 
-      if(menuTotalPrice + adjusted_delivery_fee + serveis_money < points){
-        setUsePoint(Number(menuTotalPrice + adjusted_delivery_fee + serveis_money))
-        setCoupon_Pay(0)
-        setUse_Repoint(0)
-        return
-      }
-      else{
-        setUsePoint(Number(points))
-        setCoupon_Pay(0)
-        setUse_Repoint(0)
-        return
-      }
+    if(menuTotalPrice + adjusted_delivery_fee + serveis_money < points){
+      setUsePoint(Number(menuTotalPrice + adjusted_delivery_fee + serveis_money))
+      setCoupon_Pay(0)
+      setUse_Repoint(0)
+      return
     }
+    else{
+      setUsePoint(Number(points))
+      setCoupon_Pay(0)
+      setUse_Repoint(0)
+      return
+    }
+  }
+
+  useEffect(() => {
 
     Setter()
   }, [UserId]);
@@ -219,9 +220,11 @@ const Cart: NextPage = () => {
     if (type === 'minus') {
       if (storedCart[index].quantity !== 1) {
         dispatch(minusQuantity(index))
+        Setter()
       }
     } else if (type === 'plus') {
       dispatch(plusQuantity(index))
+      Setter()
     }
   }
 
