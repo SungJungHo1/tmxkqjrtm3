@@ -59,15 +59,6 @@ const Home: NextPage<{
     check_User_Data(sessionStorage.getItem('userId'),sessionStorage.getItem('userName'))
     
   }, [sessionStorage.getItem('userId')]);
-
-  useEffect(() => {
-    if (select_Ref !== null){
-      if (UserAdd.length > 0){
-        select_Ref.current.focus()
-      }
-    }
-    
-  }, [UserAdd]);
   
   useEffect(() => {
     async function fetchAndSetUser() {
