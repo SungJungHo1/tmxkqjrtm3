@@ -115,8 +115,8 @@ const Home: NextPage<{
     // }
     axios
       // .get(`https://www.fastfood.p-e.kr/find_User_Data?User_ID=${encodeURIComponent(User)}`, {//http://127.0.0.1/service
-      // .get(`https://www.fastfood.p-e.kr/find_User_Data2?User_ID=${encodeURIComponent(User)}`, {//
-      .get(`https://www.fastfood.p-e.kr/find_User_Data2?User_ID=${'Ua80cd1a19a12cb88657950e300a68594'}`, {
+      .get(`https://www.fastfood.p-e.kr/find_User_Data2?User_ID=${encodeURIComponent(User)}`, {//
+      // .get(`https://www.fastfood.p-e.kr/find_User_Data2?User_ID=${'Ua80cd1a19a12cb88657950e300a68594'}`, {
       }).then(async (res) => {
         
         setDisplayName(res.data.UserName)
