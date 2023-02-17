@@ -187,7 +187,7 @@ const Home: NextPage<{
           },
         )      
         setpopularMenu_Local(popularMenuRes.data)
-        
+        select_Ref.current.openMenuOnFocus(false)
         return
     }})
     }
