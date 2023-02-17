@@ -7,14 +7,15 @@ import axios from 'axios'
 import { StarIcon } from '@heroicons/react/solid'
 import { insertCommas } from '@/libs/utils'
 import HomeTemplate from '@/templates/home-template'
-import { uniqBy } from 'lodash'
+import { add, uniqBy } from 'lodash'
 import https from 'https'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { useEffect, useState ,useRef} from 'react'
 import type { Liff } from "@line/liff";
 import dayjs from 'dayjs'
 import swal from 'sweetalert2'
 import Swal from 'sweetalert2'
+import Select from 'react-select'
 import CustomSelect from '@/components/CustomSelect'
 
 
@@ -41,6 +42,7 @@ const Home: NextPage<{
   const [On_User, setOn_User] = useState("On");
   const [UserAdd,setUserAdd] = useState([]);
   const router = useRouter()
+  const select_Ref = useRef(null)
   
   // useEffect(() => {
   //   if (On_User === 'Off'){
@@ -55,7 +57,17 @@ const Home: NextPage<{
     setUser_Point(Number(sessionStorage.getItem('User_Point')))
     setOn_User(sessionStorage.getItem('On_User'))
     check_User_Data(sessionStorage.getItem('userId'),sessionStorage.getItem('userName'))
+    
   }, [sessionStorage.getItem('userId')]);
+
+  useEffect(() => {
+    if (select_Ref !== null){
+      if (UserAdd.length > 0){
+        select_Ref.current.focus()
+      }
+    }
+    
+  }, [UserAdd]);
   
   useEffect(() => {
     async function fetchAndSetUser() {
@@ -97,16 +109,16 @@ const Home: NextPage<{
   }
   const check_User_Data = (User,UserName) => {
     // console.log("sdsdsd")
-    if (encodeURIComponent(User) ==="null"){
-      Pushalret();
-      return
-    }
+    // if (encodeURIComponent(User) ==="null"){
+    //   Pushalret();
+    //   return
+    // }
     axios
       // .get(`https://www.fastfood.p-e.kr/find_User_Data?User_ID=${encodeURIComponent(User)}`, {//http://127.0.0.1/service
-      .get(`https://www.fastfood.p-e.kr/find_User_Data2?User_ID=${encodeURIComponent(User)}`, {//
-      // .get(`https://www.fastfood.p-e.kr/find_User_Data2?User_ID=${'Ua80cd1a19a12cb88657950e300a68594'}`, {
-      }).then((res) => {
-        console.log(res)
+      // .get(`https://www.fastfood.p-e.kr/find_User_Data2?User_ID=${encodeURIComponent(User)}`, {//
+      .get(`https://www.fastfood.p-e.kr/find_User_Data2?User_ID=${'Ua80cd1a19a12cb88657950e300a68594'}`, {
+      }).then(async (res) => {
+        
         setDisplayName(res.data.UserName)
         setDisplayName(res.data.UserName)
         setMyPoint(res.data.Re_Point)
@@ -118,12 +130,13 @@ const Home: NextPage<{
           
           if (typeof res.data.AddLists !== "undefined"){
             setUserAdd(res.data.AddLists)
-            Swal.fire({
+            await Swal.fire({
               imageUrl: '/images/kpp.png',
               imageWidth: 400,
               imageHeight: 500,
               imageAlt: 'Custom image',
             })
+            select_Ref.current.focus();
           }else{
             Pushalret();
           }
@@ -151,11 +164,20 @@ const Home: NextPage<{
         }
       );
   }
-
+  const return_Add = ()=>{
+    let add_List = []
+    UserAdd.map((i)=>{
+      add_List = [...add_List,{'value': i.주소이름, 'label': `${i.주소1} ${i.주소2}`}]
+    })
+    
+    return add_List
+  }
 
   const handleChange = (e) => {
-    if (e.target.value !== 12121){
-      UserAdd?.map(async (i)=>{if(i.주소이름 === e.target.value){
+    
+    // return
+    if (e.value !== 12121){
+      UserAdd?.map(async (i)=>{if(i.주소이름 === e.value){
         swal.fire(`ตั้งค่าที่อยู่ได้แล้วค่ะ\nกรุณาเลือกเมนู\nที่ต้องการได้เลยค่ะ`)
         sessionStorage.setItem('add1',`${i.주소1}`)
         sessionStorage.setItem('add2',`${i.주소2}`)
@@ -174,7 +196,7 @@ const Home: NextPage<{
           },
         )      
         setpopularMenu_Local(popularMenuRes.data)
-        console.log(popularMenuRes.data)
+        
         return
     }})
     }
@@ -241,7 +263,11 @@ const Home: NextPage<{
           
         </div>
         {/* <CustomSelect UserAdd={UserAdd} localPos={seter}/> */}
-        <select className='w-full rounded-md bg-primary' style={{ fontFamily: "Sriracha-Regular" ,borderBlockColor:"white",color:"white"}} onChange={handleChange}>
+        {/* <select 
+          autoFocus
+          className='w-full rounded-md bg-primary' 
+          ref={select_Ref} 
+          style={{ fontFamily: "Sriracha-Regular" ,borderBlockColor:"white",color:"white"}} onChange={handleChange}>
           <option
             value='{주소이름}'
           >
@@ -264,13 +290,26 @@ const Home: NextPage<{
                 </div>
               </option>
             ))}
-		      </select>
+		      </select> */}
+          
+          <Select 
+            options={UserAdd.length <=0 ?
+              [{'value': '12121', 'label': 'ไม่มีที่อยู่ที่บันทึกไว้ค่ะ'}]
+              :return_Add()}
+            isSearchable ={false}
+            openMenuOnFocus = {true}
+            onChange={handleChange}
+            className='w-full rounded-md bg-primary' 
+            ref={select_Ref} 
+          // style={{ fontFamily: "Sriracha-Regular" ,borderBlockColor:"white",color:"white"}} onChange={handleChange}
+          />
         </>
       }
       search={
         
         <button className="h-10 w-full rounded-md" style={{ fontFamily: "Sriracha-Regular" ,backgroundColor:"#E0E0E0"}} onClick={()=>{
-            router.push(`/testpage?UserId=${userId}&Ordered=${false}`,'/OrderPage')
+            // router.push(`/testpage?UserId=${userId}&Ordered=${false}`,'/OrderPage')
+            select_Ref.current.focus()
             }} >
               <p>รายละเอียดการสั่งซื้อ</p>
         </button>
