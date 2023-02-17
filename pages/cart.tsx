@@ -60,9 +60,9 @@ const Cart: NextPage = () => {
   const find_U_D = async ()=>{
     let data
     await axios
-      .get(`https://www.fastfood.p-e.kr/find_User_Data2?User_ID=${encodeURIComponent(UserId)}`, {//http://127.0.0.1/service
+      // .get(`https://www.fastfood.p-e.kr/find_User_Data2?User_ID=${encodeURIComponent(UserId)}`, {//http://127.0.0.1/service
       // .get(`https://www.fastfood.p-e.kr/find_User_Data2?User_ID=${encodeURIComponent('Ua80cd1a19a12cb88657950e300a68594')}`, {//
-      // .get(`https://www.fastfood.p-e.kr/find_User_Data2?User_ID=${'Ua80cd1a19a12cb88657950e300a68594'}`, {
+      .get(`https://www.fastfood.p-e.kr/find_User_Data2?User_ID=${'Ua80cd1a19a12cb88657950e300a68594'}`, {
       }).then((res) => {
         setCoupon_List(res.data.coupon_List)
         setMyPoint(res.data.Point)
@@ -165,7 +165,9 @@ const Cart: NextPage = () => {
 
     Setter()
   }, []);
-
+  useEffect(()=>{
+    Setter()
+  },[menuTotalPrice])
   const Setter = async () => {
     scrollToBottom()
     let points
@@ -220,13 +222,10 @@ const Cart: NextPage = () => {
     if (type === 'minus') {
       if (storedCart[index].quantity !== 1) {
         dispatch(minusQuantity(index))
-        Setter()
-        
+
       }
     } else if (type === 'plus') {
       dispatch(plusQuantity(index))
-      Setter()
-
     }
   }
 
