@@ -29,6 +29,7 @@ const Cart: NextPage = () => {
   const [UsePoint, setUsePoint] = useState(0);
   const [Coupon_List, setCoupon_List] = useState([]);
   const [Coupon_Code, setCoupon_Code] = useState("not");
+  const [C_S,setC_S] = useState(true);
   const [Coupon_Pay, setCoupon_Pay] = useState(0);
   const [Use_Repoint, setUse_Repoint] = useState(0);
   const [UserId, setUserId] = useState("");
@@ -56,6 +57,62 @@ const Cart: NextPage = () => {
     setCoupon_Pay(0)
     setUsePoint(0)
   }
+
+  const C_Setter = async () => {
+    
+    await find_U_D().then((data)=>{
+      
+    })
+  }
+
+  const Setter = async () => {
+    scrollToBottom()
+    let points
+    let Coupons
+
+    await find_U_D().then((data)=>{
+      points = data.Point
+      Coupons = data.coupon_List
+    })
+
+    if(menuTotalPrice + adjusted_delivery_fee + serveis_money < points){
+      setUsePoint(Number(menuTotalPrice + adjusted_delivery_fee + serveis_money))
+      if (Coupons?.length > 0){
+        if (menuTotalPrice + adjusted_delivery_fee + serveis_money <= points + serveis_money){
+          setCoupon_Code(Coupons[0].쿠폰번호)
+          setCoupon_Pay(serveis_money)
+          setUsePoint(menuTotalPrice + adjusted_delivery_fee)
+        }
+        else{
+          setCoupon_Code(Coupons[0].쿠폰번호)
+          setCoupon_Pay(serveis_money)
+        }
+      }
+      return
+    }
+    else{
+      setUsePoint(Number(points))
+      if (Coupons?.length > 0){
+        if (menuTotalPrice + adjusted_delivery_fee + serveis_money <= points + serveis_money){
+          setCoupon_Code(Coupons[0].쿠폰번호)
+          setCoupon_Pay(serveis_money)
+          setUsePoint(menuTotalPrice + adjusted_delivery_fee)
+        }
+        else{
+          setCoupon_Code(Coupons[0].쿠폰번호)
+          setCoupon_Pay(serveis_money)
+        }
+      }
+      return
+    }
+  }
+
+  useEffect(()=>{
+    if (Coupon_List.length > 0 && C_S){
+      Swal2.fire(`ใช้คูปองแล้ว.`)
+      setC_S(false)
+    }
+  },[Coupon_List])
 
   const find_U_D = async ()=>{
     let data
@@ -142,56 +199,19 @@ const Cart: NextPage = () => {
     setUserId(sessionStorage.getItem("userId"))
     setServeis_money(Number(sessionStorage.getItem("Service_Money")))
     setMyPoint(Number(sessionStorage.getItem("User_Point")))
-    const Setter = async () => {
-      scrollToBottom()
-      let points
-      await find_U_D().then((data)=>{
-        points = data.Point
-      })
-
-      if(menuTotalPrice + adjusted_delivery_fee + serveis_money < points){
-        setUsePoint(Number(menuTotalPrice + adjusted_delivery_fee + serveis_money))
-        setCoupon_Pay(0)
-        setUse_Repoint(0)
-        return
-      }
-      else{
-        setUsePoint(Number(points))
-        setCoupon_Pay(0)
-        setUse_Repoint(0)
-        return
-      }
-    }
-
     Setter()
+    C_Setter()
+
   }, []);
+
   useEffect(()=>{
     Setter()
+    C_Setter()
   },[menuTotalPrice])
-  const Setter = async () => {
-    scrollToBottom()
-    let points
-    await find_U_D().then((data)=>{
-      points = data.Point
-    })
-
-    if(menuTotalPrice + adjusted_delivery_fee + serveis_money < points){
-      setUsePoint(Number(menuTotalPrice + adjusted_delivery_fee + serveis_money))
-      setCoupon_Pay(0)
-      setUse_Repoint(0)
-      return
-    }
-    else{
-      setUsePoint(Number(points))
-      setCoupon_Pay(0)
-      setUse_Repoint(0)
-      return
-    }
-  }
 
   useEffect(() => {
-
     Setter()
+    C_Setter()
   }, [UserId]);
 
   const cartTotalCombinedPrice = () => {
