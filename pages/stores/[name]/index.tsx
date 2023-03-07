@@ -30,10 +30,13 @@ import Head from 'next/head'
 
 export const menusFetcher = (url) =>
   axios
-    .get(url, {
+    .get('/api/v1/restaurants/311101/menu/?add_photo_menu=android&add_one_dish_menu=true&additional_discount_per_menu=true&order_serving_type=delivery', {
       headers: {
         'x-apikey': 'iphoneap',
         'x-apisecret': 'fe5183cc3dea12bd0ce299cf110a75a2',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': '*',
+        'Access-Control-Allow-Credentials': 'true'
       },
       httpsAgent: new https.Agent({
         rejectUnauthorized: false,
