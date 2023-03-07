@@ -32,8 +32,6 @@ export const menusFetcher = (url) =>
   axios
     .get(url, {
       headers: {
-        'x-apikey': 'iphoneap',
-        'x-apisecret': 'fe5183cc3dea12bd0ce299cf110a75a2',
       },
       httpsAgent: new https.Agent({
         rejectUnauthorized: false,
@@ -58,9 +56,9 @@ const Menus: NextPage = () => {
   } = router.query
   const [alertVisible, setAlertVisible] = useState(false)
   const [loading, setLoading] = useState(false)
-
+  // ${process.env.NEXT_PUBLIC_API_HOST}
   const { data } = useSWR(
-    id ? `${process.env.NEXT_PUBLIC_API_HOST}/getMenus?id=${id}` : null,
+    id ? `http://localhost/getMenus?id=${id}` : null,
     menusFetcher,
   )
   console.log(estimated_delivery_time)
