@@ -56,9 +56,9 @@ const Menus: NextPage = () => {
   } = router.query
   const [alertVisible, setAlertVisible] = useState(false)
   const [loading, setLoading] = useState(false)
-  // ${process.env.NEXT_PUBLIC_API_HOST}
+  // 
   const { data } = useSWR(
-    id ? `http://localhost/getMenus?id=${id}` : null,
+    id ? `${process.env.NEXT_PUBLIC_API_HOST}/getMenus?id=${id}` : null,
     menusFetcher,
   )
   console.log(estimated_delivery_time)
