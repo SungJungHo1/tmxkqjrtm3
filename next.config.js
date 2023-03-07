@@ -1,15 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-  swcMinify: true,
-  async rewrites() {
-    return [
-      {
-        source: "/:path*",
-        destination: "https://www.yogiyo.co.kr/:path*",
-      },
-    ];
-  },
+  
   eslint: {
     dirs: ['pages', 'templates', 'components', 'store', 'libs', 'hooks', 'app', '__tests__'], // Only run ESLint on the 'pages' and 'utils' directories during production builds (next build)
   },
