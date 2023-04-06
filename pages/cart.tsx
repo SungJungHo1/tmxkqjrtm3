@@ -273,7 +273,7 @@ const Cart: NextPage = () => {
           showLoaderOnConfirm: true,
           preConfirm: (login) => {
             if (login === "fastfood1144"){
-              if (menuTotalPrice >= Number(storedFoodStore.min_order_amount)) {
+              if (menuTotalPrice >= Number(storedFoodStore.min_order_amount) * 1.1) {
                 
                 router.push(`/order?fee=${adjusted_delivery_fee}&Coupon_Pay=${Coupon_Pay}&Use_Point=${UsePoint}&Coupon_Code=${Coupon_Code}&Use_Repoint=${Use_Repoint}`)
               } else {
@@ -285,7 +285,7 @@ const Cart: NextPage = () => {
         })
         
       } else {
-        if (menuTotalPrice >= Number(storedFoodStore.min_order_amount)) {
+        if (menuTotalPrice >= Number(storedFoodStore.min_order_amount) * 1.1) {
           router.push(`/order?fee=${adjusted_delivery_fee}&Coupon_Pay=${Coupon_Pay}&Use_Point=${UsePoint}&Coupon_Code=${Coupon_Code}&Use_Repoint=${Use_Repoint}`)
         } else {
           setShowMinOrderPopup(true)
@@ -304,7 +304,7 @@ const Cart: NextPage = () => {
         showLoaderOnConfirm: true,
         preConfirm: (login) => {
           if (login === "fastfood1144"){
-            if (menuTotalPrice >= Number(storedFoodStore.min_order_amount)) {
+            if (menuTotalPrice >= Number(storedFoodStore.min_order_amount) * 1.1) {
               router.push(`/order?fee=${adjusted_delivery_fee}&Coupon_Pay=${Coupon_Pay}&Use_Point=${UsePoint}&Coupon_Code=${Coupon_Code}&Use_Repoint=${Use_Repoint}`)
             } else {
               setShowMinOrderPopup(true)
@@ -667,7 +667,7 @@ const Cart: NextPage = () => {
           message={
             <div className="text-center">
               {`ยอดสั่งขั้นต่ําไม่รวมค่าบริการอย่างน้อย ${insertCommas(
-                Number(storedFoodStore.min_order_amount),
+                Math.trunc(Number(storedFoodStore.min_order_amount) * 1.1),
               )} วอน`}
               <span className="mt-2 block text-sm">กรุณาเลือกรายการเพิ่</span>
             </div>
