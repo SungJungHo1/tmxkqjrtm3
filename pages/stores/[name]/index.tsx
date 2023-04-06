@@ -246,7 +246,7 @@ const Menus: NextPage = () => {
                   </div>
                   <div className="w-full bg-black/60 p-2 text-white">
                     <div className="truncate">{menu.translatedName || menu.name}</div>
-                    <div>₩ {insertCommas(menu.price)}</div>
+                    <div>₩ {insertCommas(Math.trunc(menu.price * 1.1))}</div>
                   </div>
                 </div>
               </a> :
@@ -259,7 +259,7 @@ const Menus: NextPage = () => {
                       name,
                       description: menu.description,
                       original_image: menu.original_image,
-                      price: menu.price,
+                      price: Math.trunc(menu.price * 1.1),
                       menu_name: menu.name,
                       menuTranslatedName: menu.translatedName || '',
                       subchoices: JSON.stringify(menu.subchoices),
@@ -278,7 +278,7 @@ const Menus: NextPage = () => {
                     </div>
                     <div className="w-full bg-black/60 p-2 text-white">
                       <div className="truncate">{menu.translatedName || menu.name}</div>
-                      <div>₩ {insertCommas(menu.price)}</div>
+                      <div>₩ {insertCommas(Math.trunc(menu.price * 1.1))}</div>
                     </div>
                   </div>
                 </Link>
@@ -301,7 +301,7 @@ const Menus: NextPage = () => {
                         <div className="text-[#5956d9]">รีวิว ({menu.review_count})</div>
                       ) : null}
 
-                      <div className="text-[#c71719]">₩ {insertCommas(menu.price)}</div>
+                      <div className="text-[#c71719]">₩ {insertCommas(Math.trunc(menu.price * 1.1))}</div>
                     </div>
                     <div className="relative h-24 w-32 flex-[0_0_8rem] overflow-hidden rounded-md">
                       {menu.image ? (
@@ -319,7 +319,7 @@ const Menus: NextPage = () => {
                       name,
                       description: menu.description,
                       original_image: menu.original_image,
-                      price: menu.price,
+                      price: Math.trunc(menu.price * 1.1),
                       menu_name: menu.name,
                       menuTranslatedName: menu.translatedName || '',
                       subchoices: JSON.stringify(menu.subchoices),
@@ -340,7 +340,7 @@ const Menus: NextPage = () => {
                         <div className="text-[#5956d9]">รีวิว ({menu.review_count})</div>
                       ) : null}
 
-                      <div className="text-[#c71719]">₩ {insertCommas(menu.price)}</div>
+                      <div className="text-[#c71719]">₩ {insertCommas(Math.trunc(menu.price * 1.1))}</div>
                     </div>
                     <div className="relative h-24 w-32 flex-[0_0_8rem] overflow-hidden rounded-md">
                       {menu.image ? (
@@ -372,7 +372,7 @@ const Menus: NextPage = () => {
                             //  리뷰
                             <div className="text-[#5956d9]">รีวิว ({menu.review_count})</div>
                           ) : null}
-                          <div className="text-[#c71719]">₩ {insertCommas(menu.price)}</div>
+                          <div className="text-[#c71719]">₩ {insertCommas(Math.trunc(menu.price * 1.1))}</div>
                         </div>
                         <div className="relative h-24 w-32 flex-[0_0_8rem] overflow-hidden rounded-md">
                           {menu.image ? (
@@ -390,7 +390,7 @@ const Menus: NextPage = () => {
                           name,
                           description: menu.description,
                           original_image: menu.original_image,
-                          price: menu.price,
+                          price: Math.trunc(menu.price * 1.1),
                           menu_name: menu.name,
                           menuTranslatedName: menu.translatedName || '',
                           subchoices: JSON.stringify(menu.subchoices),
@@ -410,7 +410,7 @@ const Menus: NextPage = () => {
                             //  리뷰
                             <div className="text-[#5956d9]">รีวิว ({menu.review_count})</div>
                           ) : null}
-                          <div className="text-[#c71719]">₩ {insertCommas(menu.price)}</div>
+                          <div className="text-[#c71719]">₩ {insertCommas(Math.trunc(menu.price * 1.1))}</div>
                         </div>
                         <div className="relative h-24 w-32 flex-[0_0_8rem] overflow-hidden rounded-md">
                           {menu.image ? (

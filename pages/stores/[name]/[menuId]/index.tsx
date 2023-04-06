@@ -86,7 +86,7 @@ const MenuDetails: NextPage = () => {
           optionTranslatedName: option.translatedName,
           subOptionName: option.subchoices[0].name,
           subOptionTranslatedName: option.subchoices[0].translatedName,
-          subOptionPrice: Number(option.subchoices[0].price),
+          subOptionPrice: Number(Math.trunc(option.subchoices[0].price * 1.1)),
         },]
       }
 
@@ -443,7 +443,7 @@ const MenuDetails: NextPage = () => {
                                     optionTranslatedName: option.translatedName,
                                     subOptionName: subOption.name,
                                     subOptionTranslatedName: subOption.translatedName,
-                                    subOptionPrice: subOption.price,
+                                    subOptionPrice: Math.trunc(subOption.price * 1.1),
                                     multiple_count: option.multiple_count,
                                     mandatory:option.mandatory
                                   },
@@ -465,7 +465,7 @@ const MenuDetails: NextPage = () => {
                                       optionTranslatedName: option.translatedName,
                                       subOptionName: subOption.name,
                                       subOptionTranslatedName: subOption.translatedName,
-                                      subOptionPrice: subOption.price,
+                                      subOptionPrice: Math.trunc(subOption.price * 1.1),
                                     }
                                   )
 
@@ -488,7 +488,7 @@ const MenuDetails: NextPage = () => {
                                     optionTranslatedName: option.translatedName,
                                     subOptionName: subOption.name,
                                     subOptionTranslatedName: subOption.translatedName,
-                                    subOptionPrice: subOption.price,
+                                    subOptionPrice: Math.trunc(subOption.price * 1.1),
                                     multiple_count: option.multiple_count,
                                     mandatory:option.mandatory
                                   },
@@ -499,9 +499,9 @@ const MenuDetails: NextPage = () => {
                               }}
                             />
                         }
-                        <span className="ml-2">{subOption.translatedName || subOption.name}</span>
+                        <span className="ml-2 w-40">{subOption.translatedName || subOption.name}</span>
                       </label>
-                      <span>+ ₩ {insertCommas(Number(subOption.price))}</span>
+                      <span>+ ₩ {insertCommas(Math.trunc(subOption.price * 1.1))}</span>
                     </div>
                   ))
                 }
