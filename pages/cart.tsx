@@ -16,8 +16,11 @@ import axios from 'axios'
 const Cart: NextPage = () => {
   const storedCart = useAppSelector((state) => state.app.cart)
   const storedFoodStore = useAppSelector((state) => state.app.storedFoodStore)
-
-  const adjusted_delivery_fee = Number(storedFoodStore?.adjusted_delivery_fee)
+  const return_price = (prices)=>{
+    const re_price = Math.ceil(Math.trunc(parseInt(prices as string, 10) * 1.1) /100) * 100
+    return re_price
+  }
+  const adjusted_delivery_fee = Number(return_price(storedFoodStore?.adjusted_delivery_fee))
 
   const [showPopup, setShowPopup] = useState(false)
   const [showMinOrderPopup, setShowMinOrderPopup] = useState(false)

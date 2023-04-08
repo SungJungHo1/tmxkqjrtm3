@@ -200,7 +200,7 @@ const Menus: NextPage = () => {
                     {/* 배송비 */}
                     <span className="text-[#7c7c7c]">ค่าจัดส่ง</span>
                     <span className="ml-2">
-                      {insertCommas(parseInt(adjusted_delivery_fee as string, 10))}
+                      {insertCommas(return_price(adjusted_delivery_fee as string))}
                       {/* 원 */}
                       <span className="text-[#7c7c7c]">วอน</span>
                     </span>
