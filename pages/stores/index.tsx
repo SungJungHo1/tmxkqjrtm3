@@ -98,7 +98,7 @@ const Stores: NextPage<{
           ))}
         </div>
       </div>
-      {data?.restaurants ?  data?.restaurants.length > 0 ? (
+      {data?.restaurants ?  data?.restaurants.length == 0 ? (
         uniqBy<{
           id: number
           name: string
@@ -202,23 +202,25 @@ const Stores: NextPage<{
             </div>
           </button>
         ))
-      ): (
+      ): (<>
         <div style={{ fontFamily: "Sriracha-Regular" }}>
           <br></br>
           {/*조회 결과가 없습니다.*/}
           ตอนนี้ลูกค้ายังไม่ได้ตั้งค่าที่อยู่หรือไม่มีร้านค้าในบริเวรใกล้เคียง กรุณากลับไปที่หน้าหลักและตั้งค่าที่อยู่ด้วยค่ะ
-          
-
-          <button
-              className="w-full rounded-lg bg-primary py-3 text-white "
-              onClick={()=>{router.push('https://liff.line.me/1657404178-4jZ8QNQk')}}
-              // 쿠폰사용금액
-              // 쿠폰적용,쿠폰금액
-            >{`ลงทะเบียนที่อยู่`}
-          </button>
             
         </div>
-      ): (
+        <br></br>
+        <div className='flex justify-center items-center w-full'>
+          <button
+                className="w-80 rounded-lg bg-primary py-3 text-white "
+                onClick={()=>{router.push('https://liff.line.me/1657404178-4jZ8QNQk')}}
+                // 쿠폰사용금액
+                // 쿠폰적용,쿠폰금액
+              >{`ลงทะเบียนที่อยู่`}
+          </button>
+        </div>
+        </>
+      ): (<>
         <div style={{ fontFamily: "Sriracha-Regular" }}>
           {/*조회 결과가 없습니다.*/}
           <br></br>
@@ -226,14 +228,19 @@ const Stores: NextPage<{
           ตอนนี้ลูกค้ายังไม่ได้ตั้งค่าที่อยู่หรือไม่มีร้านค้าในบริเวรใกล้เคียง กรุณากลับไปที่หน้าหลักและตั้งค่าที่อยู่ด้วยค่ะ
           
 
+          
+        </div>
+        <br></br>
+        <div className='flex justify-center items-center w-full'>
           <button
-              className="w-full rounded-lg bg-primary py-3 text-white "
-              onClick={()=>{router.push('https://liff.line.me/1657404178-4jZ8QNQk')}}
-              // 쿠폰사용금액
-              // 쿠폰적용,쿠폰금액
-            >{`ลงทะเบียนที่อยู่`}
+                className="w-80 rounded-lg bg-primary py-3 text-white "
+                onClick={()=>{router.push('https://liff.line.me/1657404178-4jZ8QNQk')}}
+                // 쿠폰사용금액
+                // 쿠폰적용,쿠폰금액
+              >{`ลงทะเบียนที่อยู่`}
           </button>
         </div>
+        </>
       )}
 
       <FloatingButton url="/cart" />
