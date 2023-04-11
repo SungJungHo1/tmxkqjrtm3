@@ -16,6 +16,7 @@ import React, { useRef } from 'react'
 import https from 'https'
 import dayjs from 'dayjs'
 import Head from 'next/head'
+import Swal from 'sweetalert2'
 
 const Stores: NextPage<{
   position: { longitude: number; latitude: number } | null
@@ -24,6 +25,7 @@ const Stores: NextPage<{
   const router = useRouter()
   const category = router.query.category || ''
   const ref = useRef()
+  const [UserAdd,setUserAdd] = useState([]);
   
 
   const isActive = (cateKey) => cateKey === category
@@ -32,7 +34,6 @@ const Stores: NextPage<{
     const today = new Date()
     const initStartTime = dayjs().startOf('date')
     const initEndTime = dayjs().endOf('date')
-
     const splitStartTime = begin.split(':')
     const splitEndTime = end.split(':')
 
@@ -70,6 +71,25 @@ const Stores: NextPage<{
         swal('ร้านปิดแล้ว')
       }
     }
+  }
+
+  useEffect(()=>{
+    if (data?.restaurants.length > 0){
+      axios.get(`https://www.fastfood.p-e.kr/find_User_Data2?User_ID=${encodeURIComponent('Ua80cd1a19a12cb88657950e300a68594')}`, {//
+      // .get(`https://www.fastfood.p-e.kr/find_User_Data2?User_ID=${'Ua80cd1a19a12cb88657950e300a68594'}`, {
+      }).then(async (res) => {
+        
+        if (res.data){
+          if (typeof res.data.AddLists !== "undefined"){
+            setUserAdd(res.data.AddLists)
+            console.log(res.data.AddLists)
+          }
+        }
+      })
+    }
+  },[])
+  const call_Data = async (lat,long) =>{
+    router.push
   }
 
   return (
@@ -216,6 +236,7 @@ const Stores: NextPage<{
         </div>
         <br></br>
         <div className='flex justify-center items-center w-full'>
+          
           <button
                 className="w-80 rounded-lg bg-primary py-3 text-white "
                 onClick={()=>{router.push('https://liff.line.me/1657404178-4jZ8QNQk')}}
@@ -223,6 +244,39 @@ const Stores: NextPage<{
                 // 쿠폰적용,쿠폰금액
               >{`ลงทะเบียนที่อยู่`}
           </button>
+        </div>
+        <div className='w-full'>
+        <br/>
+          {UserAdd.map((datas)=>(
+            <Link style={{ fontFamily: "Sriracha-Regular" }}
+            key={datas.주소이름}
+            href={{
+              pathname: '/stores',
+              query: {
+                category: router.query.category,
+                latitude: datas.좌표1,
+                longitude: datas.좌표2
+              },
+            }}
+            as="/stores"
+              // 쿠폰사용금액
+              // 쿠폰적용,쿠폰금액
+          >
+            <div className="flex flex-row items-center border border-x-0 border-gray-100 p-4">
+              <div className="relative h-24 w-24 flex-[0_0_6rem] overflow-hidden rounded-md bg-slate-300">
+                {
+                  datas.주소이미지?<Image src={datas.주소이미지} width={100} height={100} alt="logo" unoptimized/>
+                  :<Image src={"/images/Line-Logo-700x394.png"} width={100} height={100} alt="logo" unoptimized/>
+                }
+                
+              </div>
+              <div className="ml-4 space-y-1 text-left">
+                <div className="w-full text-lg font-bold text-[13px]">{datas.주소1}</div>
+                <div className="w-full text-lg font-bold text-[13px]">{datas.주소2}</div>
+              </div>
+            </div>
+          </Link>
+          ))}
         </div>
         </>
       ): (<>
@@ -245,6 +299,7 @@ const Stores: NextPage<{
               >{`ลงทะเบียนที่อยู่`}
           </button>
         </div>
+        <div>sdsdsds</div>
         </>
       )}
 
