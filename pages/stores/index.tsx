@@ -204,8 +204,19 @@ const Stores: NextPage<{
         ))
       ): (
         <div style={{ fontFamily: "Sriracha-Regular" }}>
+          <br></br>
           {/*조회 결과가 없습니다.*/}
           ตอนนี้ลูกค้ายังไม่ได้ตั้งค่าที่อยู่หรือไม่มีร้านค้าในบริเวณใกล้เคียง กรุณากลับไปที่หน้าหลักแบะตั้งค่าที่อยู่ด้วยนะคะ
+          
+
+          <button
+              className="w-full rounded-lg bg-primary py-3 text-white "
+              onClick={()=>{router.push('https://liff.line.me/1657404178-4jZ8QNQk')}}
+              // 쿠폰사용금액
+              // 쿠폰적용,쿠폰금액
+            >{`ที่อยู่ลงทะเบียน`}
+          </button>
+            
         </div>
       ): (
         <div style={{ fontFamily: "Sriracha-Regular" }}>
