@@ -16,14 +16,14 @@ const Index: NextPage<{ position: { longitude: number; latitude: number } | null
   
   useEffect(() => {
     // alert("index");
-    if (position) {
+    // if (position) {
       if (liff !== null) {
         if (liff.isInClient() && liff.isLoggedIn()) {
           router.replace(`/home?${queryString}`, '/')
         }
       }
-    }
-  }, [position, queryString, router,liff])
-  if (!position || !liff) return <Loading message="กรุณาอนุญาตให้ใช้ตำแหน่ง gps" />
+    // }
+  }, [queryString, router,liff])
+  if (!liff) return <Loading message="กรุณาอนุญาตให้ใช้ตำแหน่ง gps" />
 }
 export default Index
