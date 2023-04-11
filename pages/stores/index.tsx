@@ -75,7 +75,7 @@ const Stores: NextPage<{
 
   useEffect(()=>{
     if (data?.restaurants.length > 0){
-      axios.get(`https://www.fastfood.p-e.kr/find_User_Data2?User_ID=${encodeURIComponent('Ua80cd1a19a12cb88657950e300a68594')}`, {//
+      axios.get(`https://www.fastfood.p-e.kr/find_User_Data2?User_ID=${encodeURIComponent(sessionStorage.getItem('userId'))}`, {//
       // .get(`https://www.fastfood.p-e.kr/find_User_Data2?User_ID=${'Ua80cd1a19a12cb88657950e300a68594'}`, {
       }).then(async (res) => {
         
