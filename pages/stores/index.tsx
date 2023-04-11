@@ -55,6 +55,11 @@ const Stores: NextPage<{
     return { start: openTime, end: closeTime }
   }
 
+  const return_price = (prices)=>{
+    const re_price = Math.ceil(Math.trunc(parseInt(prices as string, 10) * 1.1) /100) * 100
+    return re_price
+  }
+
   const handleClickStore = (open, query, begin, end) => {
     if (open) {
       router.push({ pathname: `/stores/[name]`, query }, `/stores/${query.name}`)
@@ -194,7 +199,7 @@ const Stores: NextPage<{
                       ค่าส่ง
                     </span>
                     <span className="ml-2 text-[#c71719]">
-                      {restaurant.adjusted_delivery_fee} วอน
+                      {insertCommas(return_price(restaurant.adjusted_delivery_fee))} วอน
                     </span>
                   </div>
                 </div>

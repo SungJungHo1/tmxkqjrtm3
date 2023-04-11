@@ -99,6 +99,12 @@ const Home: NextPage<{
       
     })
   }
+
+  const return_price = (prices)=>{
+    const re_price = Math.ceil(Math.trunc(parseInt(prices as string, 10) * 1.1) /100) * 100
+    return re_price
+  }
+
   const check_User_Data = (User,UserName) => {
     // console.log("sdsdsd")
     if (encodeURIComponent(User) ==="null"){
@@ -445,7 +451,7 @@ const Home: NextPage<{
                             <span>({restaurant.review_count})</span>
                             <span className="mx-2 text-[#7c7c7c]">ค่าจัดส่ง</span>
                             <span className="text-[#c71719]">
-                              ₩ {insertCommas(restaurant.adjusted_delivery_fee)}
+                              ₩ {insertCommas(return_price(restaurant.adjusted_delivery_fee))}
                             </span>
                           </div>
                         </div>
