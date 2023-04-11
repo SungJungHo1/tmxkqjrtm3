@@ -98,7 +98,7 @@ const Stores: NextPage<{
           ))}
         </div>
       </div>
-      {data?.restaurants ?  data?.restaurants.length == 0 ? (
+      {data?.restaurants ?  data?.restaurants.length > 0 ? (
         uniqBy<{
           id: number
           name: string
