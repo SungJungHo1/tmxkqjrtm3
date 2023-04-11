@@ -191,8 +191,8 @@ const Order: NextPage<{
         // .postForm(`http://localhost/pushOrder?userId=${'Ua80cd1a19a12cb88657950e300a68594'}&userName=${"개발자"}&new_cus=${new_Cus}&delivery_fee=${router.query.fee}&Service_Money=${serveis_money}&ImageIn=${data.addressPhoto[0] !== undefined ? 'yes' : 'no'}`, {
         OrderData: JSON.stringify(data),
         cart: JSON.stringify(cartOrder),
-        lan: position?.latitude,
-        lng: position?.longitude,
+        lan: position?position.latitude:123,
+        lng: position?position.longitude:123,
         thumbnail_url: sessionStorage.getItem("thumbnail_url"),
         image: data.addressPhoto[0] ? File_Dates : null,
         phone:sessionStorage.getItem("phone"),
