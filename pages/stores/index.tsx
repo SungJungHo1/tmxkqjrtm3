@@ -204,7 +204,7 @@ const Stores: NextPage<{
                         สั่งขั้นต่ำ
                       </span>
                       <span className="text-[#c71719]">
-                        {insertCommas(Math.trunc(restaurant.min_order_amount * 1.1))}
+                        {insertCommas(Math.ceil(Math.trunc(restaurant.min_order_amount * 1.2) /100) * 100)}
                       </span>
                       {/*원*/}
                       วอน

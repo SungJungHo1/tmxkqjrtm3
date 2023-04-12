@@ -413,7 +413,7 @@ const Home: NextPage<{
                           <span>({restaurant.review_count})</span>
                           <span className="mx-2 text-[#7c7c7c]">ค่าจัดส่ง</span>
                           <span className="text-[#c71719]">
-                            ₩ {insertCommas(restaurant.adjusted_delivery_fee)}
+                            ₩ {insertCommas(return_price(restaurant.adjusted_delivery_fee))}
                           </span>
                         </div>
                       </div>

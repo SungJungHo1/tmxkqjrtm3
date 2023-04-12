@@ -191,7 +191,8 @@ const Menus: NextPage = () => {
                     {/* 최소주문 */}
                     <span className="text-[#7c7c7c]">สั่งขั้นต่ำ</span>
                     <span className="ml-2">
-                      {insertCommas(Math.trunc(parseInt(min_order_amount as string) * 1.1))}
+                      
+                      {insertCommas(Math.ceil(Math.trunc(parseInt(min_order_amount as string, 10) * 1.2) /100) * 100)}
                       {/* 원 */}
                       <span className="text-[#7c7c7c]">วอน</span>
                     </span>
