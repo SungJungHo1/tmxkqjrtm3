@@ -225,7 +225,8 @@ const Stores: NextPage<{
             </div>
           </button>
         ))
-      ): (<>
+      ): (
+      <>
         <div style={{ fontFamily: "Sriracha-Regular" }}>
           <br></br>
           {/*조회 결과가 없습니다.*/}
@@ -277,7 +278,8 @@ const Stores: NextPage<{
           ))}
         </div>
         </>
-      ): (<>
+      ): (
+        <>
         <div style={{ fontFamily: "Sriracha-Regular" }}>
           <br></br>
           {/*조회 결과가 없습니다.*/}
