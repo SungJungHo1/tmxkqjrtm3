@@ -72,7 +72,7 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
   useEffect(() => {
     if (liffObject !== null) {
       if (!liffObject.isLoggedIn()){
-        // liffObject.login()
+        liffObject.login()
         // sessionStorage.setItem("User_Point", `0`)
         // sessionStorage.setItem("On_User", 'On')
         // sessionStorage.setItem("userId", '비회원')
