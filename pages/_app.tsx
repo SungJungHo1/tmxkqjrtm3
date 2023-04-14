@@ -72,38 +72,46 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
   useEffect(() => {
     if (liffObject !== null) {
       if (!liffObject.isLoggedIn()){
-        liffObject.login()
+        getLiff(liffObject.login())
         // sessionStorage.setItem("User_Point", `0`)
         // sessionStorage.setItem("On_User", 'On')
         // sessionStorage.setItem("userId", '비회원')
         // sessionStorage.setItem("userName", '비회원')
         return
       }
-      liffObject.ready.then(async () => {
-        const liffprofile: UnPromise<ReturnType<typeof liffObject.getProfile>> = await liffObject.getProfile();
-        sessionStorage.setItem("userId", liffprofile.userId)
-        sessionStorage.setItem("userName", liffprofile.displayName)
-        // FlareLane.setUserId(liffprofile.userId);
-        // FlareLane.setTags({platform:"line",UserName:liffprofile.displayName})
-
-        liffprofile.pictureUrl ? sessionStorage.setItem("PictureUrl", liffprofile.pictureUrl) : sessionStorage.setItem("PictureUrl", "")
-        await axios
-          .get(`https://www.fastfood.p-e.kr/find_User_Data?User_ID=${encodeURIComponent(liffprofile.userId)}`, {//http://127.0.0.1/service
-          }).then((res) => {
-            if (res.data >= 0){
-              sessionStorage.setItem("User_Point", `${res.data}`)
-              sessionStorage.setItem("On_User", 'On')
-              sessionStorage.setItem("ReCount", 'Y')
-
-            }
-            else {
-              sessionStorage.setItem("User_Point", `0`)
-              sessionStorage.setItem("On_User", 'Off')
-            }
-          })
-      })
+      getLiff(liffObject.login())
     }
   }, [liffObject])
+
+  const getLiff = (Login) => {
+    if (!Login){
+      liffObject.login()
+    }
+    
+    liffObject.ready.then(async () => {
+      const liffprofile: UnPromise<ReturnType<typeof liffObject.getProfile>> = await liffObject.getProfile();
+      sessionStorage.setItem("userId", liffprofile.userId)
+      sessionStorage.setItem("userName", liffprofile.displayName)
+      // FlareLane.setUserId(liffprofile.userId);
+      // FlareLane.setTags({platform:"line",UserName:liffprofile.displayName})
+
+      liffprofile.pictureUrl ? sessionStorage.setItem("PictureUrl", liffprofile.pictureUrl) : sessionStorage.setItem("PictureUrl", "")
+      await axios
+        .get(`https://www.fastfood.p-e.kr/find_User_Data?User_ID=${encodeURIComponent(liffprofile.userId)}`, {//http://127.0.0.1/service
+        }).then((res) => {
+          if (res.data >= 0){
+            sessionStorage.setItem("User_Point", `${res.data}`)
+            sessionStorage.setItem("On_User", 'On')
+            sessionStorage.setItem("ReCount", 'Y')
+
+          }
+          else {
+            sessionStorage.setItem("User_Point", `0`)
+            sessionStorage.setItem("On_User", 'Off')
+          }
+        })
+    })
+  }
 
   useEffect(() => {
     import('react-facebook-pixel')
