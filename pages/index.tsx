@@ -18,12 +18,16 @@ const Index: NextPage<{ position: { longitude: number; latitude: number } | null
     // alert("index");
     // if (position) {
       if (liff !== null) {
+        
         if (liff.isInClient() && liff.isLoggedIn()) {
           router.replace(`/home?${queryString}`, '/')
         }
+        else if (!liff.isLoggedIn()){
+          liff.login()
+        }
       }
     // }
-  }, [queryString, router,liff])
+  }, [router,liff])
   if (!liff) return <Loading message="กรุณาอนุญาตให้ใช้ตำแหน่ง gps" />
 }
 export default Index
