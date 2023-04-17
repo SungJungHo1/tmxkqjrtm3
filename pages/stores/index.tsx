@@ -56,6 +56,12 @@ const Stores: NextPage<{
     return { start: openTime, end: closeTime }
   }
 
+  const Add_Link_Click = (category, latitude, longitude,Add1,Add2) => {
+    sessionStorage.setItem('add1',`${Add1}`)
+    sessionStorage.setItem('add2',`${Add2}`)
+    router.push(`/stores?category=${category}&latitude=${latitude}&longitude=${longitude}`,'/stores')
+  }
+
   const return_price = (prices)=>{
     const re_price = Math.ceil(Math.trunc(parseInt(prices as string, 10) * 1.1) /100) * 100
     return re_price
@@ -247,17 +253,9 @@ const Stores: NextPage<{
         <div className='w-full'>
         <br/>
           {UserAdd.map((datas)=>(
-            <Link style={{ fontFamily: "Sriracha-Regular" }}
+            <button style={{ fontFamily: "Sriracha-Regular" }}
             key={datas.주소이름}
-            href={{
-              pathname: '/stores',
-              query: {
-                category: router.query.category,
-                latitude: datas.좌표1,
-                longitude: datas.좌표2
-              },
-            }}
-            as="/stores"
+            onClick={() => {Add_Link_Click(router.query.category,datas.좌표1,datas.좌표2,datas.주소1,datas.주소2)}}
               // 쿠폰사용금액
               // 쿠폰적용,쿠폰금액
           >
@@ -274,7 +272,7 @@ const Stores: NextPage<{
                 <div className="w-full text-lg font-bold text-[13px]">{datas.주소2}</div>
               </div>
             </div>
-          </Link>
+          </button>
           ))}
         </div>
         </>
@@ -300,17 +298,9 @@ const Stores: NextPage<{
         <div className='w-full'>
         <br/>
           {UserAdd.map((datas)=>(
-            <Link style={{ fontFamily: "Sriracha-Regular" }}
+            <button style={{ fontFamily: "Sriracha-Regular" }}
             key={datas.주소이름}
-            href={{
-              pathname: '/stores',
-              query: {
-                category: router.query.category,
-                latitude: datas.좌표1,
-                longitude: datas.좌표2
-              },
-            }}
-            as="/stores"
+            onClick={() => {Add_Link_Click(router.query.category,datas.좌표1,datas.좌표2,datas.주소1,datas.주소2)}}
               // 쿠폰사용금액
               // 쿠폰적용,쿠폰금액
           >
@@ -327,7 +317,7 @@ const Stores: NextPage<{
                 <div className="w-full text-lg font-bold text-[13px]">{datas.주소2}</div>
               </div>
             </div>
-          </Link>
+          </button>
           ))}
         </div>
         </>
