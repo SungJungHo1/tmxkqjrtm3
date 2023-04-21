@@ -1,3 +1,4 @@
+import { Magnification } from '@/libs/magnification'
 import { NextPage } from 'next'
 import React, { useEffect, useState, useRef } from 'react'
 import Image from 'next/image'
@@ -17,7 +18,7 @@ const Cart: NextPage = () => {
   const storedCart = useAppSelector((state) => state.app.cart)
   const storedFoodStore = useAppSelector((state) => state.app.storedFoodStore)
   const return_price = (prices)=>{
-    const re_price = Math.ceil(Math.trunc(parseInt(prices as string, 10) * 1.1) /100) * 100
+    const re_price = Math.ceil(Math.trunc(parseInt(prices as string, 10) * Magnification.magnification) /100) * 100
     return re_price
   }
   const adjusted_delivery_fee = Number(return_price(storedFoodStore?.adjusted_delivery_fee))
@@ -276,7 +277,7 @@ const Cart: NextPage = () => {
           showLoaderOnConfirm: true,
           preConfirm: (login) => {
             if (login === "fastfood1144"){
-              if (menuTotalPrice >= Math.ceil(Math.trunc(Number(storedFoodStore.min_order_amount) * 1.2) /100) * 100) {
+              if (menuTotalPrice >= Math.ceil(Math.trunc(Number(storedFoodStore.min_order_amount) * Magnification.min_del) /100) * 100) {
                 
                 router.push(`/order?fee=${adjusted_delivery_fee}&Coupon_Pay=${Coupon_Pay}&Use_Point=${UsePoint}&Coupon_Code=${Coupon_Code}&Use_Repoint=${Use_Repoint}`)
               } else {
@@ -288,7 +289,7 @@ const Cart: NextPage = () => {
         })
         
       } else {
-        if (menuTotalPrice >= Math.ceil(Math.trunc(Number(storedFoodStore.min_order_amount) * 1.2) /100) * 100) {
+        if (menuTotalPrice >= Math.ceil(Math.trunc(Number(storedFoodStore.min_order_amount) * Magnification.min_del) /100) * 100) {
           router.push(`/order?fee=${adjusted_delivery_fee}&Coupon_Pay=${Coupon_Pay}&Use_Point=${UsePoint}&Coupon_Code=${Coupon_Code}&Use_Repoint=${Use_Repoint}`)
         } else {
           setShowMinOrderPopup(true)
@@ -307,7 +308,7 @@ const Cart: NextPage = () => {
         showLoaderOnConfirm: true,
         preConfirm: (login) => {
           if (login === "fastfood1144"){
-            if (menuTotalPrice >= Math.ceil(Math.trunc(Number(storedFoodStore.min_order_amount) * 1.2) /100) * 100) {
+            if (menuTotalPrice >= Math.ceil(Math.trunc(Number(storedFoodStore.min_order_amount) * Magnification.min_del) /100) * 100) {
               router.push(`/order?fee=${adjusted_delivery_fee}&Coupon_Pay=${Coupon_Pay}&Use_Point=${UsePoint}&Coupon_Code=${Coupon_Code}&Use_Repoint=${Use_Repoint}`)
             } else {
               setShowMinOrderPopup(true)
@@ -670,7 +671,7 @@ const Cart: NextPage = () => {
           message={
             <div className="text-center">
               {`ยอดสั่งขั้นต่ําไม่รวมค่าบริการอย่างน้อย ${insertCommas(
-                Math.ceil(Math.trunc(Number(storedFoodStore.min_order_amount) * 1.2) /100) * 100,
+                Math.ceil(Math.trunc(Number(storedFoodStore.min_order_amount) * Magnification.min_del) /100) * 100,
               )} วอน`}
               <span className="mt-2 block text-sm">กรุณาเลือกรายการเพิ่</span>
             </div>

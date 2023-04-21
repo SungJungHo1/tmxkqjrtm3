@@ -1,3 +1,4 @@
+import { Magnification } from '@/libs/magnification'
 import { GetServerSideProps, NextPage } from 'next'
 import { StarIcon } from '@heroicons/react/solid'
 import { ClockIcon, TruckIcon } from '@heroicons/react/outline'
@@ -63,7 +64,7 @@ const Stores: NextPage<{
   }
 
   const return_price = (prices)=>{
-    const re_price = Math.ceil(Math.trunc(parseInt(prices as string, 10) * 1.1) /100) * 100
+    const re_price = Math.ceil(Math.trunc(parseInt(prices as string, 10) * Magnification.magnification) /100) * 100
     return re_price
   }
 
@@ -210,7 +211,7 @@ const Stores: NextPage<{
                         สั่งขั้นต่ำ
                       </span>
                       <span className="text-[#c71719]">
-                        {insertCommas(Math.ceil(Math.trunc(restaurant.min_order_amount * 1.2) /100) * 100)}
+                        {insertCommas(Math.ceil(Math.trunc(restaurant.min_order_amount * Magnification.min_del) /100) * 100)}
                       </span>
                       {/*원*/}
                       วอน

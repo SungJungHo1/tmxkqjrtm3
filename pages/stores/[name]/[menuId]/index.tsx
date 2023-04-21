@@ -1,3 +1,4 @@
+import { Magnification } from '@/libs/magnification'
 import { NextPage } from 'next'
 import Link from 'next/link'
 import TranslatePopup from '@/components/translate-popup'
@@ -86,7 +87,7 @@ const MenuDetails: NextPage = () => {
           optionTranslatedName: option.translatedName,
           subOptionName: option.subchoices[0].name,
           subOptionTranslatedName: option.subchoices[0].translatedName,
-          subOptionPrice: Number(Math.trunc(option.subchoices[0].price * 1.1)),
+          subOptionPrice: Number(Math.trunc(option.subchoices[0].price * Magnification.magnification)),
         },]
       }
 
@@ -96,7 +97,7 @@ const MenuDetails: NextPage = () => {
   }, []);
 
   const return_price = (prices)=>{
-    const re_price = Math.ceil(Math.trunc(parseInt(prices as string, 10) * 1.1) /100) * 100
+    const re_price = Math.ceil(Math.trunc(parseInt(prices as string, 10) * Magnification.magnification) /100) * 100
     return re_price
   }
   // Math.trunc(subOption.price * 1.1)

@@ -6,6 +6,7 @@ import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import TranslatePopup from '@/components/translate-popup'
 import { useRouter } from 'next/router'
+import { Magnification } from '@/libs/magnification'
 import axios from 'axios'
 import Image from 'next/image'
 import { insertCommas } from '@/libs/utils'
@@ -74,7 +75,7 @@ const Menus: NextPage = () => {
   },[])
 
   const return_price = (prices)=>{
-    const re_price = Math.ceil(Math.trunc(parseInt(prices as string, 10) * 1.1) /100) * 100
+    const re_price = Math.ceil(Math.trunc(parseInt(prices as string, 10) * Magnification.magnification) /100) * 100
     return re_price
   }
 
@@ -192,7 +193,7 @@ const Menus: NextPage = () => {
                     <span className="text-[#7c7c7c]">สั่งขั้นต่ำ</span>
                     <span className="ml-2">
                       
-                      {insertCommas(Math.ceil(Math.trunc(parseInt(min_order_amount as string, 10) * 1.2) /100) * 100)}
+                      {insertCommas(Math.ceil(Math.trunc(parseInt(min_order_amount as string, 10) * Magnification.min_del) /100) * 100)}
                       {/* 원 */}
                       <span className="text-[#7c7c7c]">วอน</span>
                     </span>

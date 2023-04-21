@@ -1,3 +1,4 @@
+import { Magnification } from '@/libs/magnification'
 import { GetServerSideProps, NextPage } from 'next'
 import { ClockIcon, SearchIcon } from '@heroicons/react/outline'
 import { CATEGORIES } from '@/libs/constants'
@@ -101,7 +102,7 @@ const Home: NextPage<{
   }
 
   const return_price = (prices)=>{
-    const re_price = Math.ceil(Math.trunc(parseInt(prices as string, 10) * 1.1) /100) * 100
+    const re_price = Math.ceil(Math.trunc(parseInt(prices as string, 10) * Magnification.magnification) /100) * 100
     return re_price
   }
 
