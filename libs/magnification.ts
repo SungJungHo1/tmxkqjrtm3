@@ -1,2 +1,2 @@
-export const Magnification = {'min_del':1.2,'magnification':1.15}
+export const Magnification = {'min_del':1.3,'magnification':1.15}
   
