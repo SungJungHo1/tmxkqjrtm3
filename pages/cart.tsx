@@ -22,6 +22,7 @@ const Cart: NextPage = () => {
     return re_price
   }
   const adjusted_delivery_fee = Number(return_price(storedFoodStore?.adjusted_delivery_fee))
+  const origin_adjusted_delivery_fee = Number(storedFoodStore?.adjusted_delivery_fee)
 
   const [showPopup, setShowPopup] = useState(false)
   const [showMinOrderPopup, setShowMinOrderPopup] = useState(false)
@@ -279,7 +280,7 @@ const Cart: NextPage = () => {
             if (login === "fastfood1144"){
               if (menuTotalPrice >= Math.ceil(Math.trunc(Number(storedFoodStore.min_order_amount) * Magnification.min_del) /100) * 100) {
                 
-                router.push(`/order?fee=${adjusted_delivery_fee}&Coupon_Pay=${Coupon_Pay}&Use_Point=${UsePoint}&Coupon_Code=${Coupon_Code}&Use_Repoint=${Use_Repoint}`)
+                router.push(`/order?fee=${adjusted_delivery_fee}&Coupon_Pay=${Coupon_Pay}&Use_Point=${UsePoint}&Coupon_Code=${Coupon_Code}&Use_Repoint=${Use_Repoint}&origin_fee=${origin_adjusted_delivery_fee}`)
               } else {
                 setShowMinOrderPopup(true)
               }
@@ -290,7 +291,7 @@ const Cart: NextPage = () => {
         
       } else {
         if (menuTotalPrice >= Math.ceil(Math.trunc(Number(storedFoodStore.min_order_amount) * Magnification.min_del) /100) * 100) {
-          router.push(`/order?fee=${adjusted_delivery_fee}&Coupon_Pay=${Coupon_Pay}&Use_Point=${UsePoint}&Coupon_Code=${Coupon_Code}&Use_Repoint=${Use_Repoint}`)
+          router.push(`/order?fee=${adjusted_delivery_fee}&Coupon_Pay=${Coupon_Pay}&Use_Point=${UsePoint}&Coupon_Code=${Coupon_Code}&Use_Repoint=${Use_Repoint}&origin_fee=${origin_adjusted_delivery_fee}`)
         } else {
           setShowMinOrderPopup(true)
         }
@@ -309,7 +310,7 @@ const Cart: NextPage = () => {
         preConfirm: (login) => {
           if (login === "fastfood1144"){
             if (menuTotalPrice >= Math.ceil(Math.trunc(Number(storedFoodStore.min_order_amount) * Magnification.min_del) /100) * 100) {
-              router.push(`/order?fee=${adjusted_delivery_fee}&Coupon_Pay=${Coupon_Pay}&Use_Point=${UsePoint}&Coupon_Code=${Coupon_Code}&Use_Repoint=${Use_Repoint}`)
+              router.push(`/order?fee=${adjusted_delivery_fee}&Coupon_Pay=${Coupon_Pay}&Use_Point=${UsePoint}&Coupon_Code=${Coupon_Code}&Use_Repoint=${Use_Repoint}&origin_fee=${origin_adjusted_delivery_fee}`)
             } else {
               setShowMinOrderPopup(true)
             }

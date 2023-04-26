@@ -185,10 +185,8 @@ const Order: NextPage<{
     const File_Dates = await handleFileOnChange(data.addressPhoto[0])
     
     await axios //"U812329a68632f4237dea561c6ba1d413"
-      .postForm(`https://www.fastfood.p-e.kr/pushOrder?userId=${userId}&userName=${encodeURIComponent(userName)}&new_cus=${new_Cus}&delivery_fee=${router.query.fee}&Service_Money=${serveis_money}&ImageIn=${data.addressPhoto[0] !== undefined ? 'yes' : 'no'}`, {
-        // .postForm(`https://www.fastfood.p-e.kr/pushOrder?userId=${'U812329a68632f4237dea561c6ba1d413'}&userName=${'크턱'}&new_cus=${new_Cus}&delivery_fee=${router.query.fee}&Service_Money=${serveis_money}&ImageIn=${data.addressPhoto[0] !== undefined ? 'yes' : 'no'}`, {
-      // .postForm(`https://www.fastfood.p-e.kr/pushOrder?userId=${'U812329a68632f4237dea561c6ba1d413'}&userName=${"크턱"}&new_cus=${new_Cus}&delivery_fee=${router.query.fee}&Service_Money=${serveis_money}&ImageIn=${data.addressPhoto[0] !== undefined ? 'yes' : 'no'}`, {
-        // .postForm(`http://localhost/pushOrder?userId=${'Ua80cd1a19a12cb88657950e300a68594'}&userName=${"개발자"}&new_cus=${new_Cus}&delivery_fee=${router.query.fee}&Service_Money=${serveis_money}&ImageIn=${data.addressPhoto[0] !== undefined ? 'yes' : 'no'}`, {
+      .postForm(`https://www.fastfood.p-e.kr/pushOrder?userId=${userId}&userName=${encodeURIComponent(userName)}&new_cus=${new_Cus}&delivery_fee=${router.query.fee}&origin_fee=${router.query.origin_fee}&Service_Money=${serveis_money}&ImageIn=${data.addressPhoto[0] !== undefined ? 'yes' : 'no'}`, {
+        // .postForm(`http://localhost/pushOrder?userId=${userId}&userName=${encodeURIComponent(userName)}&new_cus=${new_Cus}&delivery_fee=${router.query.fee}&origin_fee=${router.query.origin_fee}&Service_Money=${serveis_money}&ImageIn=${data.addressPhoto[0] !== undefined ? 'yes' : 'no'}`, {
         OrderData: JSON.stringify(data),
         cart: JSON.stringify(cartOrder),
         lan: position?position.latitude:123,

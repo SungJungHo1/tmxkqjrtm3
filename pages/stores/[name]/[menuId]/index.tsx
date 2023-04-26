@@ -41,6 +41,7 @@ const MenuDetails: NextPage = () => {
     menu_name,
     menuTranslatedName,
     original_image,
+    original_price,
     price,
     subchoices,
     review_count,
@@ -87,7 +88,8 @@ const MenuDetails: NextPage = () => {
           optionTranslatedName: option.translatedName,
           subOptionName: option.subchoices[0].name,
           subOptionTranslatedName: option.subchoices[0].translatedName,
-          subOptionPrice: Number(Math.trunc(option.subchoices[0].price * Magnification.magnification)),
+          original_subOptionPrice : Number(option.subchoices[0].price),
+          subOptionPrice: Number(return_price(option.subchoices[0].price)),
         },]
       }
 
@@ -159,6 +161,18 @@ const MenuDetails: NextPage = () => {
     }
   }
 
+  const getOriginal_TotalPrice = () => {
+    const totalOptionPrice = addedOptions.reduce((acc, curr) => {
+      acc += curr.original_subOptionPrice
+      return acc
+    }, 0)
+
+    return {
+      value: (Number(original_price) + totalOptionPrice) * orderQuantity,
+      label: insertCommas((Number(original_price) + totalOptionPrice) * orderQuantity),
+    }
+  }
+
   const getBasePrice = () => {
     const totalOptionPrice = addedOptions.reduce((acc, curr) => {
       acc += curr.subOptionPrice
@@ -193,7 +207,7 @@ const MenuDetails: NextPage = () => {
   // }
 
   const handleOptionClick = (
-    { index2, optionSlag, optionName, subOptionName, optionTranslatedName, subOptionTranslatedName, subOptionPrice, multiple_count,mandatory },
+    { index2, optionSlag, optionName, subOptionName, optionTranslatedName, subOptionTranslatedName,original_subOptionPrice, subOptionPrice, multiple_count,mandatory },
     checked, ev
   ) => {
 
@@ -223,6 +237,7 @@ const MenuDetails: NextPage = () => {
           subOptionName,
           optionTranslatedName,
           subOptionTranslatedName,
+          original_subOptionPrice: Number(original_subOptionPrice),
           subOptionPrice: Number(subOptionPrice),
         },
       ])
@@ -232,7 +247,7 @@ const MenuDetails: NextPage = () => {
     }
   }
 
-  const UniquehandleOptionClick = ({ index2, optionName, subOptionName, optionTranslatedName, subOptionTranslatedName, subOptionPrice }) => {
+  const UniquehandleOptionClick = ({ index2, optionName, subOptionName, optionTranslatedName, subOptionTranslatedName,original_subOptionPrice, subOptionPrice }) => {
     // setAddedOptions(addedOptions.filter((option) => option.optionName !== optionName))
     let count = 0
     addedOptions.map((i) => i.optionName === optionName && i.index2 === index2 ? count = count + 1 : null)
@@ -241,11 +256,19 @@ const MenuDetails: NextPage = () => {
     if (count === 0) {
       setAddedOptions([
         ...addedOptions,
-        { index2, optionName, subOptionName, optionTranslatedName, subOptionTranslatedName, subOptionPrice: Number(subOptionPrice) },
+        { 
+          index2,
+          optionName,
+          subOptionName,
+          optionTranslatedName,
+          subOptionTranslatedName,
+          original_subOptionPrice: Number(original_subOptionPrice),
+          subOptionPrice: Number(subOptionPrice)
+        },
       ])
     } else {
       console.log(addedOptions)
-      setAddedOptions(addedOptions.map((i) => i.optionName === optionName && i.index2 === index2 ? { index2, optionName, subOptionName, optionTranslatedName, subOptionTranslatedName, subOptionPrice: Number(subOptionPrice) } : i))
+      setAddedOptions(addedOptions.map((i) => i.optionName === optionName && i.index2 === index2 ? { index2, optionName, subOptionName, optionTranslatedName, subOptionTranslatedName,original_subOptionPrice: Number(original_subOptionPrice), subOptionPrice: Number(subOptionPrice) } : i))
     }
   }
 
@@ -285,10 +308,12 @@ const MenuDetails: NextPage = () => {
             menu_name: router.query.menu_name as string,
             menuTranslatedName: (menuTranslatedName as string) || tMenuName,
             menuId: router.query.menuId as string,
+            original_price: router.query.original_price as string,
             price: router.query.price as string,
           },
           options: addedOptions,
           quantity: orderQuantity,
+          Original_TotalPrice:getOriginal_TotalPrice().value,
           totalPrice: getTotalPrice().value,
           basePrice: getBasePrice().value,
           storeId: router.query.id as string,
@@ -329,10 +354,12 @@ const MenuDetails: NextPage = () => {
             original_image: router.query.original_image as string,
             menu_name: router.query.menu_name as string,
             menuId: router.query.menuId as string,
+            original_price: router.query.original_price as string,
             price: router.query.price as string,
           },
           options: addedOptions,
           quantity: orderQuantity,
+          Original_TotalPrice:getOriginal_TotalPrice().value,
           totalPrice: getTotalPrice().value,
           basePrice: getBasePrice().value,
           storeId: router.query.id as string,
@@ -450,6 +477,7 @@ const MenuDetails: NextPage = () => {
                                     optionTranslatedName: option.translatedName,
                                     subOptionName: subOption.name,
                                     subOptionTranslatedName: subOption.translatedName,
+                                    original_subOptionPrice: subOption.price,
                                     subOptionPrice: return_price(subOption.price),
                                     multiple_count: option.multiple_count,
                                     mandatory:option.mandatory
@@ -472,6 +500,7 @@ const MenuDetails: NextPage = () => {
                                       optionTranslatedName: option.translatedName,
                                       subOptionName: subOption.name,
                                       subOptionTranslatedName: subOption.translatedName,
+                                      original_subOptionPrice: subOption.price,
                                       subOptionPrice: return_price(subOption.price),
                                     }
                                   )
@@ -495,6 +524,7 @@ const MenuDetails: NextPage = () => {
                                     optionTranslatedName: option.translatedName,
                                     subOptionName: subOption.name,
                                     subOptionTranslatedName: subOption.translatedName,
+                                    original_subOptionPrice: subOption.price,
                                     subOptionPrice: return_price(subOption.price),
                                     multiple_count: option.multiple_count,
                                     mandatory:option.mandatory

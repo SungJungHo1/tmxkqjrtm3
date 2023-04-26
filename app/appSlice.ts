@@ -17,10 +17,12 @@ export type StoredCart = {
     menu_name: string
     menuTranslatedName?: string
     menuId: string
+    original_price: string
     price: string
   }
   options: any[]
   quantity: number
+  Original_TotalPrice:number
   totalPrice: number
   basePrice: number
   storeId: string
