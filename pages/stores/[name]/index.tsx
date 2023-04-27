@@ -400,6 +400,7 @@ const Menus: NextPage = () => {
                           name,
                           description: menu.description,
                           original_image: menu.original_image,
+                          original_price: menu.price,
                           price: return_price(menu.price),
                           menu_name: menu.name,
                           menuTranslatedName: menu.translatedName || '',
