@@ -185,6 +185,18 @@ const MenuDetails: NextPage = () => {
     }
   }
 
+  const getOriginal_BasePrice = () => {
+    const totalOptionPrice = addedOptions.reduce((acc, curr) => {
+      acc += curr.original_subOptionPrice
+      return acc
+    }, 0)
+
+    return {
+      value: (Number(original_price) + totalOptionPrice) * 1,
+      label: insertCommas((Number(original_price) + totalOptionPrice) * 1),
+    }
+  }
+
   const handleQuantityClick = (type) => {
     if (type === 'minus') {
       if (orderQuantity !== 1) {
@@ -316,6 +328,7 @@ const MenuDetails: NextPage = () => {
           Original_TotalPrice:getOriginal_TotalPrice().value,
           totalPrice: getTotalPrice().value,
           basePrice: getBasePrice().value,
+          Original_BasePrice:getOriginal_BasePrice().value,
           storeId: router.query.id as string,
           storeName: router.query.name as string,
         }),
@@ -362,6 +375,7 @@ const MenuDetails: NextPage = () => {
           Original_TotalPrice:getOriginal_TotalPrice().value,
           totalPrice: getTotalPrice().value,
           basePrice: getBasePrice().value,
+          Original_BasePrice:getOriginal_BasePrice().value,
           storeId: router.query.id as string,
           storeName: router.query.name as string,
         },

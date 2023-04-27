@@ -24,6 +24,7 @@ export type StoredCart = {
   quantity: number
   Original_TotalPrice:number
   totalPrice: number
+  Original_BasePrice:number,
   basePrice: number
   storeId: string
   storeName: string
@@ -69,11 +70,13 @@ export const appSlice = createSlice({
       const cartIndex = action.payload
       state.cart[cartIndex].quantity += 1
       state.cart[cartIndex].totalPrice += state.cart[cartIndex].basePrice
+      state.cart[cartIndex].Original_TotalPrice += state.cart[cartIndex].Original_BasePrice
     },
     minusQuantity: (state, action: PayloadAction<number>) => {
       const cartIndex = action.payload
       state.cart[cartIndex].quantity -= 1
       state.cart[cartIndex].totalPrice -= state.cart[cartIndex].basePrice
+      state.cart[cartIndex].Original_TotalPrice -= state.cart[cartIndex].Original_BasePrice
     },
   },
 })
