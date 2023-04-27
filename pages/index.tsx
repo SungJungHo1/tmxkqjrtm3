@@ -19,13 +19,13 @@ const Index: NextPage<{ position: { longitude: number; latitude: number } | null
     // if (position) {
       if (liff !== null) {
         
-        // if (liff.isInClient() && liff.isLoggedIn()) {
+        if (liff.isInClient() && liff.isLoggedIn()) {
           router.replace(`/home?${queryString}`, '/')
-        // }
-        // else if (!liff.isLoggedIn()){
-        //   liff.login()
+        }
+        else if (!liff.isLoggedIn()){
+          liff.login()
           
-        // }
+        }
       }
     // }
   }, [router,liff])
