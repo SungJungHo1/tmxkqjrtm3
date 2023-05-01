@@ -24,7 +24,6 @@ const Index: NextPage<{ position: { longitude: number; latitude: number } | null
         }
         else if (!liff.isLoggedIn()){
           liff.login()
-          
         }
       }
     // }

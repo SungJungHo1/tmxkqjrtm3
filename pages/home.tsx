@@ -475,9 +475,11 @@ export default Home
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   try {
-    
+    //36.9693098144776
+    //126.777432147356
     const popularMenuRes = await axios.get(
       `${process.env.API_HOST}/popularMenu?latitude=${query.latitude}&longitude=${query.longitude}`,
+      // `${process.env.API_HOST}/popularMenu?latitude=${36.9693098144776}&longitude=${126.777432147356}`,
       {
         headers: {
           'x-apikey': 'iphoneap',

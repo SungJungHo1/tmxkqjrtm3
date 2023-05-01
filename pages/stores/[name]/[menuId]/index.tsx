@@ -161,18 +161,6 @@ const MenuDetails: NextPage = () => {
     }
   }
 
-  const getOriginal_TotalPrice = () => {
-    const totalOptionPrice = addedOptions.reduce((acc, curr) => {
-      acc += curr.original_subOptionPrice
-      return acc
-    }, 0)
-
-    return {
-      value: (Number(original_price) + totalOptionPrice) * orderQuantity,
-      label: insertCommas((Number(original_price) + totalOptionPrice) * orderQuantity),
-    }
-  }
-
   const getBasePrice = () => {
     const totalOptionPrice = addedOptions.reduce((acc, curr) => {
       acc += curr.subOptionPrice
@@ -182,6 +170,18 @@ const MenuDetails: NextPage = () => {
     return {
       value: (Number(price) + totalOptionPrice) * 1,
       label: insertCommas((Number(price) + totalOptionPrice) * 1),
+    }
+  }
+
+  const getOriginal_TotalPrice = () => {
+    const totalOptionPrice = addedOptions.reduce((acc, curr) => {
+      acc += curr.original_subOptionPrice
+      return acc
+    }, 0)
+
+    return {
+      value: (Number(original_price) + totalOptionPrice) * orderQuantity,
+      label: insertCommas((Number(original_price) + totalOptionPrice) * orderQuantity),
     }
   }
 
@@ -327,8 +327,8 @@ const MenuDetails: NextPage = () => {
           quantity: orderQuantity,
           Original_TotalPrice:getOriginal_TotalPrice().value,
           totalPrice: getTotalPrice().value,
-          basePrice: getBasePrice().value,
           Original_BasePrice:getOriginal_BasePrice().value,
+          basePrice: getBasePrice().value,
           storeId: router.query.id as string,
           storeName: router.query.name as string,
         }),
@@ -374,8 +374,8 @@ const MenuDetails: NextPage = () => {
           quantity: orderQuantity,
           Original_TotalPrice:getOriginal_TotalPrice().value,
           totalPrice: getTotalPrice().value,
-          basePrice: getBasePrice().value,
           Original_BasePrice:getOriginal_BasePrice().value,
+          basePrice: getBasePrice().value,
           storeId: router.query.id as string,
           storeName: router.query.name as string,
         },
@@ -518,8 +518,6 @@ const MenuDetails: NextPage = () => {
                                       subOptionPrice: return_price(subOption.price),
                                     }
                                   )
-
-
                                   // handleOptionClick(subOption.name, subOption.price, event.target.checked)
                                 }
                                 }

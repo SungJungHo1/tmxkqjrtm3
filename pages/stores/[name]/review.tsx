@@ -1,3 +1,4 @@
+import { Magnification } from '@/libs/magnification'
 import { NextPage } from 'next'
 import { StarIcon } from '@heroicons/react/solid'
 import FloatingButton from '@/components/floating-button'
@@ -21,6 +22,12 @@ const getMenuInfo = (data, menuId) => {
     .filter((menus) => menus.items.some((item) => item.id === menuId))?.[0]
     ?.items?.find((item) => item.id === menuId)
 }
+
+const return_price = (prices)=>{
+  const re_price = Math.ceil(Math.trunc(parseInt(prices as string, 10) * Magnification.magnification) /100) * 100
+  return re_price
+}
+
 const reviewFetcher = (url) =>
   axios
     .get(url, {
@@ -149,14 +156,17 @@ const Review: NextPage = () => {
                         pathname: `/stores/${name}/${menu.id}`,
                         query: {
                           id,
+                          name,
                           description: menu.description,
                           original_image: menu.original_image,
-                          price: menu.price,
+                          original_price: menu.price,
+                          price: return_price(menu.price),
                           menu_name: menu.name,
                           subchoices: menu.subchoices,
                           review_count: menu.review_count,
                           to: '/review',
                           previousQuery: JSON.stringify(router.query),
+                          phone:'01056565656'
                         },
                       }}
                       as={`/stores/${name}/${menu.id}`}
@@ -175,7 +185,7 @@ const Review: NextPage = () => {
                         <div className="flex w-full flex-col overflow-hidden">
                           <span className="truncate text-[#4d72dd]">{menu.name}</span>
                           <span className="text-[#e5483f]">
-                            ₩ {insertCommas(Number(menu.price))}원
+                            ₩ {insertCommas(return_price(menu.price))}원
                           </span>
                         </div>
                       </div>
