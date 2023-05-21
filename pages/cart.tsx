@@ -577,7 +577,7 @@ const Cart: NextPage = () => {
             className="mt-3 rounded-md p-3 text-[#333] grid place-items-center"
             style={{border:"2px solid"}}
           >
-            <p className=' flex flex-row my-auto items-center'>
+            <p className='flex flex-row my-auto items-center'>
               <p className='mr-2 font-bold text-[#1642df] text-[27px]'
                 >
                 {`₩${insertCommas(UsePoint + Coupon_Pay + Use_Repoint)}`}
@@ -588,6 +588,8 @@ const Cart: NextPage = () => {
                 </p>
             </p>
           </div>
+          <p className="mt-3 bg-gray-200 text-black rounded-md p-3 text-[#333] grid place-items-center">บริการFASTFOODไม่ได้รับค่าบริการ แต่จะขึ้นราคาอาหารแทนค่ะ
+            ใบเสร็จและจำนวนเงินที่ลูกค้าได้รับอาจมีความแตกต่างกันนะคะ</p>
         {storedCart.map(({ menu, options, quantity, totalPrice }, index) => (
           <div key={`menu.menuId_${index}`} className="space-y-4 border-b border-gray-300 py-5">
             {menu.original_image ? (
