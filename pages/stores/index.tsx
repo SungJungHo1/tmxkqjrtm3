@@ -142,14 +142,14 @@ const Stores: NextPage<{
           adjusted_delivery_fee: number
           begin: string
           end: string
-          open: boolean
+          is_open: boolean
           phone:string
         }>(data.restaurants, 'id').map((restaurant) => (
           <button style={{ fontFamily: "Sriracha-Regular" }}
             key={restaurant.id}
             onClick={() =>
               handleClickStore(
-                restaurant.open,
+                restaurant.is_open,
                 {
                   id: restaurant.id,
                   name: restaurant.name,
@@ -171,7 +171,7 @@ const Stores: NextPage<{
             <div>
               <div className="flex flex-row items-center border border-x-0 border-gray-100 p-4">
                 <div className="relative h-24 w-24 flex-[0_0_6rem] overflow-hidden rounded-md bg-slate-300">
-                  {!restaurant.open ? (
+                  {!restaurant.is_open ? (
                     <div className="absolute z-10 flex h-full w-full flex-col justify-center bg-black/70 px-2 text-center text-xs text-white">
                       {!getStoreHour(restaurant.begin, restaurant.end).start
                         ? `วันนี้เปิดบริการ ${restaurant.begin.substr(0, 5)} OPEN`
