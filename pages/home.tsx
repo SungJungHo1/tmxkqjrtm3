@@ -428,7 +428,7 @@ const Home: NextPage<{
                   <a>
                     <div className=" flex flex-col">
                       <div className="relative h-56 w-full overflow-hidden rounded-md">
-                        {!restaurant.open ? (
+                        {!restaurant.is_open ? (
                           <div className="absolute z-10 flex h-full w-full flex-col justify-center bg-black/70 px-2 text-center text-xs text-white">
                             {!getStoreHour(restaurant.begin, restaurant.end).start
                               ? `วันนี้เปิดบริการ ${restaurant.begin.substr(0, 5)} OPEN`
