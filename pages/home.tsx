@@ -373,10 +373,10 @@ const Home: NextPage<{
               adjusted_delivery_fee: number
               begin: string
               end: string
-              open: boolean
+              is_open: boolean
             }>(popularMenu_Local.restaurants === null? popularMenu?.restaurants : popularMenu_Local.restaurants, 'id').map((restaurant) => {
               return (
-                restaurant.open ? <Link
+                restaurant.is_open ? <Link
                   key={restaurant.id}
                   href={{
                     pathname: `/stores/[name]`,
