@@ -318,7 +318,7 @@ const Order: NextPage<{
             />
             <span className="ml-2">
               {/*기본*/}
-              ปกติ
+              กรุณาโทรหาฉันเมื่ออาหารถึงแล้ว
             </span>
           </label>
           <label className="flex flex-row items-center" style={{ fontFamily: "Sriracha-Regular" }}>
